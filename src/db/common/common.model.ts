@@ -1,4 +1,5 @@
 export enum CollectionNames {
   USERS = 'users',
-  WORDS = 'words'
+  WORDS = 'words',
+  TAGS = 'tags'
 }

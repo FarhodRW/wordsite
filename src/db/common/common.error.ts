@@ -3,13 +3,15 @@ export enum ErrorCodes {
   SUCCESS = 0,
   DEFAULT = 1000,
   USERS = 2000,
-  WORDS = 3000
+  WORDS = 3000,
+  TAGS = 4000
 }
 
 export enum ErrorItems {
   ITEM = 'item',
   USER = 'user',
   WORDS = 'words',
+  TAGS = 'tags'
 
 }
 
