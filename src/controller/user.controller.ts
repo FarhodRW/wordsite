@@ -34,3 +34,46 @@ export async function loginUserController(req, res, next) {
   }
 }
 
+export async function getUserProfileController(req, res, next) {
+  try {
+    const id = req.user._id
+    console.log(id)
+    const user = await userService.findById(id, '-password')
+    success(res, user)
+  } catch (error) {
+    next(error)
+  }
+}
+
+
+export async function updateUserController(req, res, next) {
+  try {
+    const id = req.user._id
+    const dto = await validateIt(req.body, UserDto, UserDtoGroup.UPDATE)
+    console.log(dto)
+    if (dto.password)
+      dto.password = await bcrypt.hash(dto.password, 8)
+    console.log(dto.password);
+
+    const user = await userService.updateById(id, dto)
+    success(res, user)
+  } catch (error) {
+    next(error)
+  }
+}
+
+
+export async function deleteUserController(req, res, next) {
+  try {
+    const id = req.user._id
+    console.log(id);
+
+    const user = await userService.updateById(id, { isDeleted: true })
+    success(res, 'success')
+  } catch (error) {
+    next(error)
+  }
+}
+
+
+

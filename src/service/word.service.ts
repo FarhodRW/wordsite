@@ -5,4 +5,4 @@ class WordService<T> extends CommonService<T> {
 
 }
 
-export const tagService = new WordService(WordModel);
+export const wordService = new WordService(WordModel);
