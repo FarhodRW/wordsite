@@ -5,7 +5,7 @@ import { verifyUserToken } from '../middleware/userAuth'
 
 const router = express.Router()
 
-router.post('/', createUserController)
+router.post('/register', createUserController)
 router.post('/login', loginUserController)
 router.get('/profile', verifyUserToken, getUserProfileController)
 router.put('/update', verifyUserToken, updateUserController)

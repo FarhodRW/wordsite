@@ -21,7 +21,8 @@ export class CommonService<T>{
     return data
   }
 
-  public async findByQuery(query, errorCode?: ErrorCodes, errorItem?: ErrorItems) {
+  public async findByQuery(query) {
+
     const data = await this.model.findOne({ query })
     return data
   }
@@ -38,9 +39,8 @@ export class CommonService<T>{
     return data
   }
 
-  public async deleteById(id: any, errorCode?: ErrorCodes, errorItem?: ErrorItems, options?: QueryOptions,) {
+  public async deleteById(id: any, options?: QueryOptions,) {
     const data = await this.model.findByIdAndDelete(id, options,)
-    if (!data) throw UserDefinedError.NotFound(id, errorItem, errorCode,)
     return data
   }
 

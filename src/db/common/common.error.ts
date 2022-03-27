@@ -41,14 +41,6 @@ export class UserDefinedError {
   static Success(data: any = 'OK') {
     return new UserDefinedError(ErrorCodes.SUCCESS, 'Success', data)
   }
-
-  static NotFound(data: any = null, errorItem: ErrorItems, errorCode: ErrorCodes) {
-    return new UserDefinedError(errorCode, `${errorItem} with these details not found`, data)
-  }
-
-  static AlreadyExists(data: any = null, errorItem: ErrorItems, errorCode: ErrorCodes) {
-    return new UserDefinedError(errorCode, `${errorItem} with these details already exists`, data)
-  }
 }
 
 

@@ -36,7 +36,7 @@ export async function deleteTagController(req, res, next) {
   try {
     const id = req.params.id
 
-    const menu = await tagService.deleteById(id, ErrorCodes.TAGS, ErrorItems.TAGS)
+    const menu = await tagService.deleteById(id)
     success(res, 'success')
   } catch (error) {
     next(error)

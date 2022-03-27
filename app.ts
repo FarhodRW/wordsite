@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
 import 'dotenv/config'
+import cors from 'cors'
 
 import userRouter from './src/router/user.router'
 import tagRouter from './src/router/tag.router'
@@ -9,6 +10,10 @@ import wordRouter from './src/router/word.router'
 
 
 const app = express();
+
+app.use(cors({
+  origin: true
+}))
 
 //db connection
 mongoose.connect(String(process.env.DBURL))
