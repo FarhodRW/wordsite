@@ -23,7 +23,7 @@ export class CommonService<T>{
 
   public async findByQuery(query) {
 
-    const data = await this.model.findOne({ query })
+    const data = await this.model.findOne(query)
     return data
   }
 
@@ -49,7 +49,7 @@ export class CommonService<T>{
     return data
   }
 
-  public async findByPaging(query, page: number, limit: number, add_pipeline?, sort?) {
+  public async findByPaging(query, page: number, limit: number, add_pipeline = [], sort?) {
     const $match = {
       $match: query
     }
@@ -61,7 +61,7 @@ export class CommonService<T>{
     }
 
     const $sort = {
-      $sort: sort
+      $sort: sort ? sort : { createdAt: -1 }
     }
 
     const pipeline = [

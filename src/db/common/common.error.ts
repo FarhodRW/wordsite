@@ -4,7 +4,8 @@ export enum ErrorCodes {
   DEFAULT = 1000,
   USERS = 2000,
   WORDS = 3000,
-  TAGS = 4000
+  TAGS = 4000,
+  SCORES = 5000
 }
 
 export enum ErrorItems {

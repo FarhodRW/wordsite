@@ -11,10 +11,10 @@ import { BaseModel } from "../baseModel";
 
 @Index(
   {
-    title: 1
+    name: 1
   },
   {
-    name: 'title',
+    name: 'name',
     unique: true,
     background: true,
     partialFilterExpression: {
@@ -25,7 +25,7 @@ import { BaseModel } from "../baseModel";
 
 export class Tag extends BaseModel {
   @prop({ required: true })
-  public title!: string;
+  public name!: string;
 
 }
 

@@ -32,7 +32,12 @@ export class Word extends BaseModel {
   public defination!: string;
 
   @prop({ default: [] })
-  public tags: Ref<Tag>[]
+  public tags: Ref<Tag>[];
+
+  @prop({ default: true })
+  public isPrivate: boolean;
+
+
 
 }
 

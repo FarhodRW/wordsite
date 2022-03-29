@@ -1,7 +1,7 @@
 import { success } from "../common/response";
 import { validateIt } from "../common/validation";
 import { ErrorCodes, ErrorItems } from "../db/common/common.error";
-import { TagDto, TagDtoGroup } from "../db/dto/tag.dto";
+import { TagDto, TagDtoGroup, TagGetDto } from "../db/dto/tag.dto";
 import { tagService } from "../service/tag.service";
 
 
@@ -27,6 +27,17 @@ export async function updateTagController(req, res, next) {
     dto.createdBy = req.user._id
     const menu = await tagService.updateById(id, dto)
     success(res, menu)
+  } catch (error) {
+    next(error)
+  }
+}
+
+
+export async function getTagsByPagingController(req, res, next) {
+  try {
+    const dto = await validateIt(req.body, TagGetDto, TagDtoGroup.GET_PAGING)
+    const tags = await tagService.getTagsByPaging(dto)
+    success(res, tags)
   } catch (error) {
     next(error)
   }

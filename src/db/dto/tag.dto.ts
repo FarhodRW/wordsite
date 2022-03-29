@@ -12,7 +12,7 @@ export class TagDto extends BaseDto {
   @IsString({
     groups: [TagDtoGroup.CREATE, TagDtoGroup.UPDATE]
   })
-  title: string;
+  name: string;
 
 
 }

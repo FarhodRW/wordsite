@@ -7,6 +7,7 @@ import cors from 'cors'
 import userRouter from './src/router/user.router'
 import tagRouter from './src/router/tag.router'
 import wordRouter from './src/router/word.router'
+import quizRouter from './src/router/quiz.router'
 
 
 const app = express();
@@ -32,6 +33,7 @@ app.use(morgan('tiny'))
 app.use('/user', userRouter)
 app.use('/tag', tagRouter)
 app.use('/word', wordRouter)
+app.use('/quiz', quizRouter)
 
 
 

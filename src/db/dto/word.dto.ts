@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsArray, IsEmail, IsMongoId, IsOptional, IsString, ValidateNested } from "class-validator";
+import { IsArray, IsBoolean, IsEmail, IsMongoId, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Tag } from "../model/tag/tag.model";
 import { BaseDto, BaseDtoGroup, BasePagingDto } from "./base.dto";
 
@@ -26,10 +26,17 @@ export class WordDto extends BaseDto {
   @IsString({ groups: [WordDtoGroup.CREATE, WordDtoGroup.UPDATE] })
   defination: string;
 
-  @IsArray()
-  // @ValidateNested({ each: true })
-  @Type(() => Tag)
-  tags: Tag[];
+  @IsArray({
+    groups: [WordDtoGroup.CREATE, WordDtoGroup.UPDATE]
+  })
+  @IsString({
+    groups: [WordDtoGroup.CREATE, WordDtoGroup.UPDATE],
+    each: true
+  })
+  tags: any[];
+
+  @IsBoolean({ groups: [WordDtoGroup.CREATE, WordDtoGroup.UPDATE] })
+  isPrivate: boolean
 
 }
 
