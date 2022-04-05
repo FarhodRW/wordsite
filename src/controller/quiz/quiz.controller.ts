@@ -14,7 +14,8 @@ export async function createQuizController(req, res, next) {
     const questions = await WordModel.aggregate([{ $sample: { size: +size } }, { $project: { _id: 1, name: 1, defination: 1 } }])
     const quizHistoryDto: QuizHistory = {
       timeLimit: +size * 60,
-      totalQuestions: +size
+      totalQuestions: +size,
+      finishingAt: new Date((new Date()).setSeconds(new Date().getSeconds() + size * 60))
     }
     const quizHistory = await quizHistoryService.create(quizHistoryDto);
 

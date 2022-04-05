@@ -15,6 +15,9 @@ class QuizItemService<T> extends CommonService<T> {
     }
     const $project = {
       $project: {
+        wordId: 0,
+        defination: 0,
+        tags: 0,
         variants: {
           isAnswer: 0,
           isFound: 0

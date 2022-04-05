@@ -26,6 +26,9 @@ export class QuizHistory extends BaseModel {
   finishedAt?: Date;
 
   @prop({})
+  finishingAt: Date;
+
+  @prop({})
   timeLimit: number;
 
   @prop({})
