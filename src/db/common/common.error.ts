@@ -5,7 +5,8 @@ export enum ErrorCodes {
   USERS = 2000,
   WORDS = 3000,
   TAGS = 4000,
-  SCORES = 5000
+  QUIZ_HISTORY = 5000,
+  QUIZ_ITEM = 6000
 }
 
 export enum ErrorItems {
