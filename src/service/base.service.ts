@@ -82,7 +82,7 @@ export class CommonService<T>{
 
   }
 
-  public async aggregate(pipeline: []) {
+  public async aggregate(pipeline = []) {
     return await this.model.aggregate(pipeline);
   }
 

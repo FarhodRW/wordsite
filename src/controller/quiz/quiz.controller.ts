@@ -1,7 +1,7 @@
 import { success } from "../../common/response";
 import { validateIt } from "../../common/validation";
+import { QuizDtoGroup, QuizHistoryGetDto } from "../../db/dto/quiz-history.dto";
 import { QuizItemDto, QuizItemDtoGroup } from "../../db/dto/quizItem.dto";
-import { ScoreDto, ScoreDtoGroup } from "../../db/dto/score.dto.ts";
 import { QuizHistory, QuizHistoryModel } from "../../db/model/quiz/quiz-history.model";
 import { QuizItemModel } from "../../db/model/quiz/quiz-item/quiz-item.model";
 import { WordModel } from "../../db/model/word/word.model";
@@ -52,7 +52,12 @@ export async function createQuizController(req, res, next) {
 
     const quizItems = await quizItemService.getQuizItemByQuizId(quizHistory._id);
 
-    success(res, { data: quizItems, total: quizItems.length })
+    const response = {
+      ...quizHistory.toObject(),
+      quizes: quizItems
+    }
+
+    success(res, response)
   } catch (error) {
     next(error)
   }
@@ -76,4 +81,21 @@ export async function updateQuizItems(req, res, next) {
   } catch (error) {
     next(error)
   }
+}
+
+export async function getQuizHistoryPagingController(req, res, next) {
+
+  try {
+
+
+    const data = await validateIt(req.body, QuizHistoryGetDto, QuizDtoGroup.GET_PAGING);
+
+    const histories = await quizHistoryService.getQuizHistoryByPaging(data);
+
+    success(res, histories);
+
+  } catch (e) {
+    next(e)
+  }
+
 }

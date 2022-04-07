@@ -10,14 +10,9 @@ import { BaseModel } from "../baseModel";
 })
 
 export class QuizHistory extends BaseModel {
-  @prop({ default: 0 })
-  public totalScore?: number;
 
   @prop({ default: 0 })
-  public rightScore?: number;
-
-  @prop({ default: 0 })
-  public wrongScore?: number;
+  public score?: number;
 
   @prop({ default: () => new Date() })
   startedAt?: Date;

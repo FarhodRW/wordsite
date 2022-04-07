@@ -2,18 +2,18 @@ import { Transform } from "class-transformer";
 import { IsEmail, IsNumber, isNumberString, IsOptional, IsString, MinLength } from "class-validator";
 import { BaseDto, BaseDtoGroup, BasePagingDto } from "./base.dto";
 
-export class ScoreDtoGroup extends BaseDtoGroup {
+export class QuizDtoGroup extends BaseDtoGroup {
 
 }
 
-export class ScoreDto extends BaseDto {
+export class QuizHistoryDto extends BaseDto {
 
   @Transform(({ value }) => isNumberString(value) ? Number(value) : value)
   @IsNumber({
     allowNaN: false,
     allowInfinity: false
   }, {
-    groups: [ScoreDtoGroup.CREATE, ScoreDtoGroup.UPDATE]
+    groups: [QuizDtoGroup.CREATE, QuizDtoGroup.UPDATE]
   })
   totalScore: number;
 
@@ -22,7 +22,7 @@ export class ScoreDto extends BaseDto {
     allowNaN: false,
     allowInfinity: false
   }, {
-    groups: [ScoreDtoGroup.CREATE, ScoreDtoGroup.UPDATE]
+    groups: [QuizDtoGroup.CREATE, QuizDtoGroup.UPDATE]
   })
   rightScore: number;
 
@@ -31,12 +31,11 @@ export class ScoreDto extends BaseDto {
     allowNaN: false,
     allowInfinity: false
   }, {
-    groups: [ScoreDtoGroup.CREATE, ScoreDtoGroup.UPDATE]
+    groups: [QuizDtoGroup.CREATE, QuizDtoGroup.UPDATE]
   })
   wrongScore: number;
 }
 
 
-export class ScoreGetDto extends BasePagingDto {
-
+export class QuizHistoryGetDto extends BasePagingDto {
 }

@@ -16,9 +16,6 @@ class QuizVariants {
 
   @prop({ default: false })
   public isAnswer!: boolean;
-
-  @prop({ default: false })
-  public isFound?: boolean;
 }
 
 @modelOptions({
@@ -45,6 +42,12 @@ export class QuizItem extends BaseModel {
 
   @prop({ default: true })
   public isPrivate: boolean;
+
+  @prop({ default: false })
+  isCorrect: boolean;
+
+  @prop({ default: false })
+  isAnswered: boolean;
 
   @prop({ _id: false, default: [], type: () => [QuizVariants] })
   variants: QuizVariants[]

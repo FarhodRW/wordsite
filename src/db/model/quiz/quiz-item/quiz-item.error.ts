@@ -8,5 +8,8 @@ export class QuizItemError {
   static AlreadyExists(data: any = null) {
     return new UserDefinedError(ErrorCodes.QUIZ_ITEM + 1, 'Quiz item with this details already exists', data);
   };
+  static AlreadyAnswered(data: any = null) {
+    return new UserDefinedError(ErrorCodes.QUIZ_ITEM + 2, 'Quiz item  already answered', data);
+  };
 
 }
