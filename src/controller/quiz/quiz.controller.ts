@@ -102,6 +102,17 @@ export async function getQuizHistoryPagingController(req, res, next) {
 
 }
 
+export async function getQuizHistoryByIdController(req, res, next) {
+  try {
+    const _id = req.params.id
+    const quizHisotry = await quizHistoryService.findById(_id)
+    return success(res, quizHisotry)
+  } catch (error) {
+    next(error)
+  }
+}
+
+
 export async function updateQuizResultController(req, res, next) {
   try {
     const id = req.params.id;

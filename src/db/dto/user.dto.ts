@@ -38,7 +38,7 @@ export class UserDto extends BaseDto {
   @IsString({
     groups: [UserDtoGroup.CREATE, UserDtoGroup.UPDATE]
   })
-  avatar: string;
+  image: string;
 
 }
 

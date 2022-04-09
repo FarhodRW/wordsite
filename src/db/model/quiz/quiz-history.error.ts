@@ -9,4 +9,8 @@ export class QuizHistoryError {
     return new UserDefinedError(ErrorCodes.QUIZ_HISTORY + 1, 'Score with this details already exists', data);
   };
 
+  static AlreadyFinished(data: any = null) {
+    return new UserDefinedError(ErrorCodes.QUIZ_HISTORY + 2, 'Quiz has already finished', data);
+  };
+
 }

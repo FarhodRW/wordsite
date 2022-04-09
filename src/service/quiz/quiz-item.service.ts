@@ -14,9 +14,23 @@ class QuizItemService<T> extends CommonService<T> {
         quizHistoryId
       }
     }
+
+    const $addFields = {
+      $addFields: {
+        wordId: {
+          $cond: [
+            {
+              $eq: ['$isAnswered', true]
+            },
+            '$wordId',
+            '$type6'
+          ]
+        }
+      }
+    }
+
     const $project = {
       $project: {
-        wordId: 0,
         defination: 0,
         tags: 0,
         variants: {
@@ -25,7 +39,7 @@ class QuizItemService<T> extends CommonService<T> {
         }
       }
     }
-    const pipeline = [$match, $project]
+    const pipeline = [$match, $addFields, $project]
     const items = await this.model.aggregate(pipeline);
 
     return items;

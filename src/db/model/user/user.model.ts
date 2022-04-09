@@ -34,7 +34,7 @@ export class User extends BaseModel {
   public password!: string;
 
   @prop({})
-  public avatar?: string;
+  public image?: string;
 
 }
 

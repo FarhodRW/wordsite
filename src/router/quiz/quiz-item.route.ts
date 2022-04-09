@@ -5,7 +5,7 @@ import { verifyUserToken } from '../../middleware/userAuth';
 
 const quizItemRouter = Router();
 
-quizItemRouter.get('/history/:id', verifyUserToken, getQuizItemHistoryController)
+// quizItemRouter.get('/history/:id', verifyUserToken, getQuizItemHistoryController)
 quizItemRouter.get('/quiz/:id', verifyUserToken, getQuizItemController)
 quizItemRouter.post('/quiz/answer/:itemId/:wordId', verifyUserToken, answerQuizController)
 

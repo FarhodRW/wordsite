@@ -11,12 +11,12 @@ export const verifyUserToken = (req: any, res: any, next: any) => {
 
     jwt.verify(token, process.env.JWTUSERKEY, async (err: any, data: any) => {
       if (err) {
-        res.status(403).json('Token is not valid!');
+        return res.status(403).json('Token is not valid!');
       }
       console.log(data)
       const user = await UserModel.findById(data._id)
       if (!user) {
-        res.status(403).json('Token is not valid!');
+        return res.status(403).json('Token is not valid!');
       }
       req.user = user;
       console.log(user)

@@ -54,6 +54,9 @@ class WordService<T> extends CommonService<T> {
         name: {
           $first: '$name'
         },
+        createdAt: {
+          $first: '$createdAt'
+        },
         defination: {
           $first: '$defination'
         },
@@ -66,19 +69,38 @@ class WordService<T> extends CommonService<T> {
       }
     }
 
+    const $skip = {
+      $skip: (page - 1)
+    }
+
+    const $limit = {
+      $limit: limit
+    }
+
 
     const $sort = {
-      createdAt: -1
+      $sort: {
+        createdAt: -1
+      }
     }
 
     const pipeline = [
+      { $match: query },
       $lookupTags,
       $unwindTags,
-      $group
+      $group,
+      $sort,
+      $skip,
+      $limit
     ]
 
-    const data = this.findByPaging(query, page, limit, pipeline, $sort)
-    return data;
+    const total = await this.countDocuments(query);
+
+    const data = await this.aggregate(pipeline)
+    return {
+      total,
+      data
+    };
   }
 
 
@@ -128,6 +150,9 @@ class WordService<T> extends CommonService<T> {
         name: {
           $first: '$name'
         },
+        createdAt: {
+          $first: '$createdAt'
+        },
         defination: {
           $first: '$defination'
         },
@@ -140,13 +165,38 @@ class WordService<T> extends CommonService<T> {
       }
     }
 
-
-    const $sort = {
-      createdAt: -1
+    const $skip = {
+      $skip: (page - 1)
     }
 
-    const data = this.findByPaging(query, page, limit, [$lookupTags, $unwindTags, $group], $sort)
-    return data;
+    const $limit = {
+      $limit: limit
+    }
+
+
+    const $sort = {
+      $sort: {
+        createdAt: -1
+      }
+    }
+
+    const pipeline = [
+      { $match: query },
+      $lookupTags,
+      $unwindTags,
+      $group,
+      $sort,
+      $skip,
+      $limit
+    ]
+
+    const total = await this.countDocuments(query);
+
+    const data = await this.aggregate(pipeline)
+    return {
+      total,
+      data
+    };
   }
 
 

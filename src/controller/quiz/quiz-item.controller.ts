@@ -8,19 +8,25 @@ import { QuizItemError } from "../../db/model/quiz/quiz-item/quiz-item.error";
 
 export async function getQuizItemHistoryController(req, res, next) {
   try {
-
+    let data
     const quizHistoryId = req.params.id;
     const quizHistory = await quizHistoryService.findById(quizHistoryId);
 
-    if (quizHistory.finishingAt > new Date() && !quizHistory.finishedAt) {
-      const items = await quizItemService.getQuizItemByQuizId(new Types.ObjectId(quizHistoryId));
+    if (!quizHistory.isFinished) {
+      const quizes = await quizItemService.getQuizItemByQuizId(new Types.ObjectId(quizHistoryId));
 
-      return success(res, items)
+      return success(res, {
+        ...quizHistory.toObject(),
+        quizes
+      })
     }
 
-    const items = await quizItemService.getQuizItemHistoryByQuizId(new Types.ObjectId(quizHistoryId));
+    const quizes = await quizItemService.getQuizItemHistoryByQuizId(new Types.ObjectId(quizHistoryId));
 
-    success(res, items)
+    return success(res, {
+      ...quizHistory.toObject(),
+      quizes
+    })
 
   } catch (e) {
     next(e)
@@ -49,6 +55,10 @@ export async function answerQuizController(req, res, next) {
 
     const item = await quizItemService.getQuizItemByIdService(new Types.ObjectId(itemId));
     if (item.isAnswered) throw QuizItemError.AlreadyAnswered()
+
+    const quizHistory = await quizHistoryService.findById(item.quizHistoryId)
+    if (quizHistory.isFinished) throw QuizHistoryError.AlreadyFinished()
+
 
     if (item.wordId.toString() == wordId.toString())
       item.isCorrect = true;
