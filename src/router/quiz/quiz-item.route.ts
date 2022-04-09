@@ -7,7 +7,7 @@ const quizItemRouter = Router();
 
 quizItemRouter.get('/history/:id', verifyUserToken, getQuizItemHistoryController)
 quizItemRouter.get('/quiz/:id', verifyUserToken, getQuizItemController)
-quizItemRouter.get('/quiz/answer/:itemId/:wordId', verifyUserToken, answerQuizController)
+quizItemRouter.post('/quiz/answer/:itemId/:wordId', verifyUserToken, answerQuizController)
 
 
 export default quizItemRouter;

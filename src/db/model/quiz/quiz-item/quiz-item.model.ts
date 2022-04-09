@@ -31,6 +31,9 @@ export class QuizItem extends BaseModel {
   @prop({ required: true, type: Types.ObjectId, ref: CollectionNames.WORDS })
   wordId: Ref<Word>;
 
+  @prop({ type: Types.ObjectId, ref: CollectionNames.WORDS })
+  selectedId: Ref<Word>
+
   @prop({ required: true })
   public name!: string;
 

@@ -36,11 +36,11 @@ class QuizHistoryService<T> extends CommonService<T> {
     this.checkTimeLimit();
   }
 
-  public async getQuizHistoryByPaging(dto: QuizHistoryGetDto) {
+  public async getQuizHistoryByPaging(dto: QuizHistoryGetDto, user_id) {
 
     const { page, limit } = dto;
 
-    const quizes = await this.findByPaging({}, page, limit)
+    const quizes = await this.findByPaging({ createdBy: new Types.ObjectId(user_id) }, page, limit)
 
     return quizes;
 

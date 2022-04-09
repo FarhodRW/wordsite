@@ -1,6 +1,6 @@
 import { success } from "../common/response";
 import { validateIt } from "../common/validation";
-import { ErrorCodes, ErrorItems } from "../db/common/common.error";
+import { ErrorCodes, ErrorItems, UserDefinedError } from "../db/common/common.error";
 import { WordDto, WordDtoGroup, WordGetDto } from "../db/dto/word.dto";
 import { tagService } from "../service/tag.service";
 import { wordService } from "../service/word.service";
@@ -58,7 +58,7 @@ export async function getWordsByPagingController(req, res, next) {
   try {
     const dto = await validateIt(req.body, WordGetDto, WordDtoGroup.GET_PAGING)
     const words = await wordService.getWordsByPaging(dto)
-    success(res, words)
+    return success(res, words)
   } catch (error) {
     next(error)
   }

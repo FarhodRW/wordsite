@@ -53,7 +53,7 @@ export async function answerQuizController(req, res, next) {
     if (item.wordId.toString() == wordId.toString())
       item.isCorrect = true;
     item.isAnswered = true;
-
+    item.selectedId = wordId;
     await item.save();
     await quizHistoryService.updateTotal(item.quizHistoryId);
 

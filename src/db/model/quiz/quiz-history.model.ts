@@ -1,4 +1,4 @@
-import { getModelForClass, Index, modelOptions, prop } from "@typegoose/typegoose";
+import { getModelForClass, Index, modelOptions, prop, Ref } from "@typegoose/typegoose";
 import { CollectionNames } from "../../common/common.model";
 import { BaseModel } from "../baseModel";
 
@@ -19,6 +19,8 @@ export class QuizHistory extends BaseModel {
 
   @prop({})
   finishedAt?: Date;
+  @prop({ default: false })
+  isFinished?: boolean;
 
   @prop({})
   finishingAt: Date;

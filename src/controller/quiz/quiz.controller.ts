@@ -11,8 +11,10 @@ import { quizItemService } from "../../service/quiz/quiz-item.service";
 export async function createQuizController(req, res, next) {
   try {
     const size = req.params.size
+    const createdBy = req.user._id
     const questions = await WordModel.aggregate([{ $sample: { size: +size } }, { $project: { _id: 1, name: 1, defination: 1 } }])
     const quizHistoryDto: QuizHistory = {
+      createdBy,
       timeLimit: +size * 60,
       totalQuestions: +size,
       finishingAt: new Date((new Date()).setSeconds(new Date().getSeconds() + size * 60))
@@ -75,7 +77,7 @@ export async function updateQuizItems(req, res, next) {
     }
 
     const quizItem = await QuizItemModel.findByIdAndUpdate(dto._id, dto)
-    return
+    return success(res, quizItem)
 
 
   } catch (error) {
@@ -90,7 +92,7 @@ export async function getQuizHistoryPagingController(req, res, next) {
 
     const data = await validateIt(req.body, QuizHistoryGetDto, QuizDtoGroup.GET_PAGING);
 
-    const histories = await quizHistoryService.getQuizHistoryByPaging(data);
+    const histories = await quizHistoryService.getQuizHistoryByPaging(data, req.user._id);
 
     success(res, histories);
 
@@ -98,4 +100,15 @@ export async function getQuizHistoryPagingController(req, res, next) {
     next(e)
   }
 
+}
+
+export async function updateQuizResultController(req, res, next) {
+  try {
+    const id = req.params.id;
+    const quiz = await quizHistoryService.updateById(id, { "isFinished": true, "finishedAt": new Date() })
+
+    success(res, quiz);
+  } catch (error) {
+    next(error)
+  }
 }
