@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "nodemon app.ts"
+    "watch": "nodemon app.ts",
+    "build": "node_modules/.bin/tsc"
   },
   "author": "",
   "license": "ISC",

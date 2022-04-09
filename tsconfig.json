@@ -12,5 +12,6 @@
     "emitDecoratorMetadata": true,
     "composite": false,
     "strictNullChecks": false,
+    "outDir": "./dist"
   }
 }
