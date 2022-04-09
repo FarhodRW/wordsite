@@ -106,12 +106,46 @@ class WordService<T> extends CommonService<T> {
       ]
     }
 
+    const $lookupTags = {
+      $lookup: {
+        from: CollectionNames.TAGS,
+        localField: 'tags',
+        foreignField: '_id',
+        as: 'tags'
+      }
+    }
+
+    const $unwindTags = {
+      $unwind: {
+        path: '$tags',
+        preserveNullAndEmptyArrays: true
+      }
+    }
+
+    const $group = {
+      $group: {
+        _id: '$_id',
+        name: {
+          $first: '$name'
+        },
+        defination: {
+          $first: '$defination'
+        },
+        tags: {
+          $push: '$tags.name'
+        },
+        isPrivate: {
+          $first: '$isPrivate'
+        }
+      }
+    }
+
 
     const $sort = {
       createdAt: -1
     }
 
-    const data = this.findByPaging(query, page, limit, [], $sort)
+    const data = this.findByPaging(query, page, limit, [$lookupTags, $unwindTags, $group], $sort)
     return data;
   }
 

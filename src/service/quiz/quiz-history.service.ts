@@ -20,9 +20,7 @@ class QuizHistoryService<T> extends CommonService<T> {
 
   public async checkTimeLimit() {
     const query = {
-      finishedAt: {
-        $exists: false
-      },
+      isFinished: false,
       finishingAt: {
         $lt: new Date()
       }
@@ -31,6 +29,7 @@ class QuizHistoryService<T> extends CommonService<T> {
     if (!quizHistory) return;
 
     quizHistory.finishedAt = new Date();
+    quizHistory.isFinished = true
     this.updateTotal(quizHistory._id);
     quizHistory.save();
     this.checkTimeLimit();
