@@ -6,11 +6,14 @@ import { success } from "../common/response";
 import { ErrorCodes, ErrorItems, UserDefinedError } from "../db/common/common.error";
 import jwt from 'jsonwebtoken'
 import { UserError } from "../db/model/user/user.error";
+import { UserModel } from "../db/model/user/user.model";
 
 
 export async function createUserController(req, res, next) {
   try {
     const dto = await validateIt(req.body, UserDto, UserDtoGroup.REGISTER)
+    const user = await UserModel.findOne({ email: dto.email })
+    if (user) throw UserError.AlreadyExists(user.email)
     dto.password = await bcrypt.hash(dto.password, 8)
     const data = await userService.create(dto);
     success(res, data)

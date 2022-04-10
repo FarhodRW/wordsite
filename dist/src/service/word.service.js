@@ -19,10 +19,12 @@ class WordService extends base_service_1.CommonService {
     }
     getWordsByPaging(dto) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { page, limit, search } = dto;
+            const { page, limit, search, createdBy } = dto;
             let query = {
-                isDeleted: false
+                isDeleted: false,
+                createdBy: createdBy
             };
+            console.log(query);
             if (search) {
                 query.$or = [
                     {
@@ -39,6 +41,9 @@ class WordService extends base_service_1.CommonService {
                     }
                 ];
             }
+            const $match = {
+                $match: { createdBy: createdBy }
+            };
             const $lookupTags = {
                 $lookup: {
                     from: common_model_1.CollectionNames.TAGS,
@@ -85,7 +90,7 @@ class WordService extends base_service_1.CommonService {
                 }
             };
             const pipeline = [
-                { $match: query },
+                $match,
                 $lookupTags,
                 $unwindTags,
                 $group,

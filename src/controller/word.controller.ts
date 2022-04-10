@@ -57,6 +57,8 @@ export async function updateWordController(req, res, next) {
 export async function getWordsByPagingController(req, res, next) {
   try {
     const dto = await validateIt(req.body, WordGetDto, WordDtoGroup.GET_PAGING)
+    dto.createdBy = req.user._id
+    console.log(dto.createdBy)
     const words = await wordService.getWordsByPaging(dto)
     return success(res, words)
   } catch (error) {

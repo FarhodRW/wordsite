@@ -10,11 +10,13 @@ class WordService<T> extends CommonService<T> {
   }
 
   public async getWordsByPaging(dto) {
-    const { page, limit, search } = dto
-    let query: FilterQuery<Word & Document> = {
-      isDeleted: false
-    }
+    const { page, limit, search, createdBy } = dto
 
+    let query: FilterQuery<Word & Document> = {
+      isDeleted: false,
+      createdBy: createdBy
+    }
+    console.log(query)
     if (search) {
       query.$or = [
         {
@@ -30,6 +32,9 @@ class WordService<T> extends CommonService<T> {
           }
         }
       ]
+    }
+    const $match = {
+      $match: { createdBy: createdBy }
     }
 
     const $lookupTags = {
@@ -85,7 +90,7 @@ class WordService<T> extends CommonService<T> {
     }
 
     const pipeline = [
-      { $match: query },
+      $match,
       $lookupTags,
       $unwindTags,
       $group,

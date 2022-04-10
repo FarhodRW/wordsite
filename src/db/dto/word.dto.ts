@@ -42,5 +42,11 @@ export class WordDto extends BaseDto {
 
 
 export class WordGetDto extends BasePagingDto {
-
+  @IsOptional({
+    groups: [BaseDtoGroup.GET_PAGING, BaseDtoGroup.CHOOSE]
+  })
+  @IsString({
+    groups: [BaseDtoGroup.GET_PAGING, BaseDtoGroup.CHOOSE]
+  })
+  createdBy?
 }

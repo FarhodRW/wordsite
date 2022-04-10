@@ -20,10 +20,14 @@ const user_service_1 = require("../service/user.service");
 const response_1 = require("../common/response");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const user_error_1 = require("../db/model/user/user.error");
+const user_model_1 = require("../db/model/user/user.model");
 function createUserController(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const dto = yield (0, validation_1.validateIt)(req.body, user_dto_1.UserDto, user_dto_1.UserDtoGroup.REGISTER);
+            const user = yield user_model_1.UserModel.findOne({ email: dto.email });
+            if (user)
+                throw user_error_1.UserError.AlreadyExists(user.email);
             dto.password = yield bcrypt_1.default.hash(dto.password, 8);
             const data = yield user_service_1.userService.create(dto);
             (0, response_1.success)(res, data);

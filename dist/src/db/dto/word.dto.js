@@ -52,4 +52,13 @@ __decorate([
 exports.WordDto = WordDto;
 class WordGetDto extends base_dto_1.BasePagingDto {
 }
+__decorate([
+    (0, class_validator_1.IsOptional)({
+        groups: [base_dto_1.BaseDtoGroup.GET_PAGING, base_dto_1.BaseDtoGroup.CHOOSE]
+    }),
+    (0, class_validator_1.IsString)({
+        groups: [base_dto_1.BaseDtoGroup.GET_PAGING, base_dto_1.BaseDtoGroup.CHOOSE]
+    }),
+    __metadata("design:type", Object)
+], WordGetDto.prototype, "createdBy", void 0);
 exports.WordGetDto = WordGetDto;

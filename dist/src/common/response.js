@@ -13,7 +13,7 @@ exports.success = void 0;
 const common_error_1 = require("../db/common/common.error");
 function success(res, data) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log("sdfnsdf", data);
+        console.log("response", data);
         return res.status(200).send(common_error_1.UserDefinedError.Success(data));
     });
 }

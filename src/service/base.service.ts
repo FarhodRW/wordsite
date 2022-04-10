@@ -22,7 +22,6 @@ export class CommonService<T>{
   }
 
   public async findByQuery(query) {
-
     const data = await this.model.findOne(query)
     return data
   }

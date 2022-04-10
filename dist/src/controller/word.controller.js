@@ -68,6 +68,8 @@ function getWordsByPagingController(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const dto = yield (0, validation_1.validateIt)(req.body, word_dto_1.WordGetDto, word_dto_1.WordDtoGroup.GET_PAGING);
+            dto.createdBy = req.user._id;
+            console.log(dto.createdBy);
             const words = yield word_service_1.wordService.getWordsByPaging(dto);
             return (0, response_1.success)(res, words);
         }
