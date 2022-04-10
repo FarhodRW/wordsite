@@ -28,8 +28,9 @@ export async function loginUserController(req, res, next) {
     const data = await validateIt(req.body, UserDto, UserDtoGroup.LOGIN)
 
     const user = await userService.getUserByEmail(data.email)
+    if (!user) throw UserError.Incorrect()
     const compare = await bcrypt.compare(data.password, user.password)
-    if (!compare) throw UserError.NotFound(data.email)
+    if (!compare) throw UserError.Incorrect()
     const token = jwt.sign({ _id: user._id }, process.env.JWTUSERKEY)
     success(res, { user, token })
   } catch (error) {

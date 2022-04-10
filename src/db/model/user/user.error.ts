@@ -9,4 +9,10 @@ export class UserError {
     return new UserDefinedError(ErrorCodes.USERS + 1, 'User with this details already exists', data);
   };
 
+  static Incorrect(data: any = null) {
+    return new UserDefinedError(ErrorCodes.USERS + 2, 'Username or password is incorrect', data);
+  };
+
+
+
 }
