@@ -39,7 +39,7 @@ export async function getTagsByPagingController(req, res, next) {
     const dto = await validateIt(req.body, TagGetDto, TagDtoGroup.GET_PAGING)
     dto.createdBy = req.user._id
     const tags = await tagService.getTagsByPaging(dto)
-    if (!tags) throw TagError.NoTag()
+    // if (!tags) throw TagError.NoTag()
     success(res, tags)
   } catch (error) {
     next(error)

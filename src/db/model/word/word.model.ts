@@ -49,7 +49,7 @@ export class Word extends BaseModel {
   public isPrivate: boolean;
 
   @prop({ type: String, enum: WordTypes })
-  public type: WordTypes[];
+  public type?: WordTypes[];
 }
 
 export const WordModel = getModelForClass(Word);

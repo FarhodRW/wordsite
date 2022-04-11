@@ -4,6 +4,9 @@ import { UserDefinedError } from "../db/common/common.error"
 
 export const verifyUserToken = (req: any, res: any, next: any) => {
   const authToken = req.headers.authorization
+  if (!authToken) {
+    return res.status(401).json('You are not authenticated')
+  }
 
   if (authToken) {
     const token = authToken.split(' ')[1]

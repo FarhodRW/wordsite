@@ -43,7 +43,7 @@ export class WordDto extends BaseDto {
     groups: [WordDtoGroup.UPDATE, WordDtoGroup.CREATE],
 
   })
-  type: WordTypes;
+  type?: WordTypes;
 
 }
 
