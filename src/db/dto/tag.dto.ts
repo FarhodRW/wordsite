@@ -19,5 +19,11 @@ export class TagDto extends BaseDto {
 
 
 export class TagGetDto extends BasePagingDto {
-
+  @IsOptional({
+    groups: [BaseDtoGroup.GET_PAGING, BaseDtoGroup.CHOOSE]
+  })
+  @IsString({
+    groups: [BaseDtoGroup.GET_PAGING, BaseDtoGroup.CHOOSE]
+  })
+  createdBy?: string;
 }

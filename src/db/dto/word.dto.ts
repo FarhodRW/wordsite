@@ -1,6 +1,7 @@
 import { Type } from "class-transformer";
-import { IsArray, IsBoolean, IsEmail, IsMongoId, IsOptional, IsString, ValidateNested } from "class-validator";
+import { IsArray, IsBoolean, IsEmail, IsEnum, IsMongoId, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Tag } from "../model/tag/tag.model";
+import { WordTypes } from "../model/word/word.model";
 import { BaseDto, BaseDtoGroup, BasePagingDto } from "./base.dto";
 
 export class WordDtoGroup extends BaseDtoGroup {
@@ -37,6 +38,12 @@ export class WordDto extends BaseDto {
 
   @IsBoolean({ groups: [WordDtoGroup.CREATE, WordDtoGroup.UPDATE] })
   isPrivate: boolean
+
+  @IsEnum(WordTypes, {
+    groups: [WordDtoGroup.UPDATE, WordDtoGroup.CREATE],
+
+  })
+  type: WordTypes;
 
 }
 

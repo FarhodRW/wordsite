@@ -12,7 +12,7 @@ class UserService<T> extends CommonService<T> {
 
   public async getUserByEmail(email: string) {
     const user = await this.model.findOne({ email });
-    if (!user) throw UserError.NotFound(email)
+    if (!user) throw UserError.Incorrect()
     return user;
   }
 }

@@ -2,6 +2,7 @@ import { success } from "../../common/response";
 import { validateIt } from "../../common/validation";
 import { QuizDtoGroup, QuizHistoryGetDto } from "../../db/dto/quiz-history.dto";
 import { QuizItemDto, QuizItemDtoGroup } from "../../db/dto/quizItem.dto";
+import { QuizHistoryError } from "../../db/model/quiz/quiz-history.error";
 import { QuizHistory, QuizHistoryModel } from "../../db/model/quiz/quiz-history.model";
 import { QuizItemModel } from "../../db/model/quiz/quiz-item/quiz-item.model";
 import { WordModel } from "../../db/model/word/word.model";
@@ -12,7 +13,9 @@ export async function createQuizController(req, res, next) {
   try {
     const size = req.params.size
     const createdBy = req.user._id
-    const questions = await WordModel.aggregate([{ $sample: { size: +size } }, { $project: { _id: 1, name: 1, defination: 1 } }])
+    const questions = await WordModel.aggregate([{ $match: { createdBy: createdBy } }, { $sample: { size: +size } }, { $project: { _id: 1, name: 1, defination: 1 } }])
+    if (!questions.length) throw QuizHistoryError.NotEnoughWord(size)
+    console.log(questions)
     const quizHistoryDto: QuizHistory = {
       createdBy,
       timeLimit: +size * 60,

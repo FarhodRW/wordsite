@@ -8,12 +8,13 @@ import { wordService } from "../service/word.service";
 
 export async function createWordController(req, res, next) {
   try {
+    console.log('dfffffffffffffff', req.body.type)
     const dto = await validateIt(req.body, WordDto, WordDtoGroup.CREATE)
+    console.log('dssssssssss', dto.type)
     dto.createdBy = req.user._id;
     const tagIds = [];
     if (dto.tags && dto.tags.length) {
       for (const tagName of dto.tags) {
-        console.log(tagName)
         const tag = await tagService.saveTagService(tagName)
         tagIds.push(tag._id);
       }

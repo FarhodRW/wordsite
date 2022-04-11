@@ -19,9 +19,10 @@ class TagService<T> extends CommonService<T> {
   }
 
   public async getTagsByPaging(dto) {
-    const { page, limit, search } = dto
+    const { page, limit, search, userId } = dto
     let query: FilterQuery<Tag & Document> = {
-      isDeleted: false
+      isDeleted: false,
+      createdBy: userId
     }
 
     if (search) {
