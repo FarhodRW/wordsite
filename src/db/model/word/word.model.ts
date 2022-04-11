@@ -3,8 +3,6 @@ import { CollectionNames } from "../../common/common.model";
 import { BaseModel } from "../baseModel";
 import { Tag } from "../tag/tag.model";
 
-
-
 export enum WordTypes {
   NOUN = 'noun',
   VERB = 'verb',
@@ -12,8 +10,6 @@ export enum WordTypes {
   ADVERB = 'adverb',
   PRONOUN = 'pronoun'
 }
-
-
 
 @modelOptions({
   schemaOptions: {
@@ -48,7 +44,7 @@ export class Word extends BaseModel {
   @prop({ default: true })
   public isPrivate: boolean;
 
-  @prop({ type: String, enum: WordTypes })
+  @prop({ type: [String], enum: WordTypes })
   public type: WordTypes[];
 }
 
