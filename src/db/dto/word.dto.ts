@@ -41,9 +41,9 @@ export class WordDto extends BaseDto {
 
   @IsEnum(WordTypes, {
     groups: [WordDtoGroup.UPDATE, WordDtoGroup.CREATE],
-
+    each: true
   })
-  type?: WordTypes;
+  types: WordTypes[];
 
 }
 
@@ -55,5 +55,5 @@ export class WordGetDto extends BasePagingDto {
   @IsString({
     groups: [BaseDtoGroup.GET_PAGING, BaseDtoGroup.CHOOSE]
   })
-  createdBy?
+  createdBy?;
 }
