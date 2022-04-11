@@ -37,6 +37,7 @@ export async function getTagsByPagingController(req, res, next) {
     const tags = await tagService.getTagsByPaging(dto)
     success(res, tags)
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }

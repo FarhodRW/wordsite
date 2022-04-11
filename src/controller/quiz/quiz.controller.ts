@@ -11,11 +11,30 @@ import { quizItemService } from "../../service/quiz/quiz-item.service";
 
 export async function createQuizController(req, res, next) {
   try {
-    const size = req.params.size
+    const size = req.body.size
     const createdBy = req.user._id
-    const questions = await WordModel.aggregate([{ $match: { createdBy: createdBy } }, { $sample: { size: +size } }, { $project: { _id: 1, name: 1, defination: 1 } }])
+    const isPrivate = req.body.private
+    const dateFrom = req.body.dateFrom
+    const dateTo = req.body.dateTo
+
+    const query = {
+      createdBy: createdBy,
+      isPrivate,
+      productTimeStamp: {
+        $gte: new Date(dateFrom),
+        $lte: new Date(dateTo)
+      }
+
+    }
+
+
+    const questions = await WordModel.aggregate([
+      { $match: query },
+      { $sample: { size: +size } },
+      { $project: { _id: 1, name: 1, defination: 1 } }])
     if (!questions.length) throw QuizHistoryError.NotEnoughWord(size)
     console.log(questions)
+
     const quizHistoryDto: QuizHistory = {
       createdBy,
       timeLimit: +size * 60,

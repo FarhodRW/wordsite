@@ -2,29 +2,26 @@ import { UserModel } from "../db/model/user/user.model"
 import jwt from 'jsonwebtoken'
 import { UserDefinedError } from "../db/common/common.error"
 
-export const verifyUserToken = (req: any, res: any, next: any) => {
-  const authToken = req.headers.authorization
-  if (!authToken) {
-    return res.status(401).json('You are not authenticated')
-  }
+export const verifyUserToken = async (req: any, res: any, next: any) => {
+  try {
+    const authToken = req.headers.authorization
+    if (!authToken) throw UserDefinedError.UnAthorizated()
+    const tokenParams = authToken.split(' ')
+    if (tokenParams.length < 2) {
+      throw UserDefinedError.UnAthorizated()
+    }
+    const token = tokenParams[1];
 
-  if (authToken) {
-    const token = authToken.split(' ')[1]
     console.log(token);
 
-    jwt.verify(token, process.env.JWTUSERKEY, async (err: any, data: any) => {
-      if (err) {
-        return res.status(403).json('Token is not valid!');
-      }
-      console.log(data)
-      const user = await UserModel.findById(data._id)
-      if (!user) {
-        return res.status(403).json('Token is not valid!');
-      }
-      req.user = user;
-      console.log(user)
-      next()
-    })
+    const data = await jwt.verify(token, process.env.JWTUSERKEY)
+    const user = await UserModel.findById(data._id)
+    if (!user) {
+      throw UserDefinedError.InvalidToken()
+    }
+    req.user = user;
+    next()
+  } catch (e) {
+    next(e)
   }
-  else { return res.status(401).send('You are not authenticated') }
 }

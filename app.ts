@@ -11,6 +11,7 @@ import wordRouter from './src/router/word.router'
 import quizRouter from './src/router/quiz/quiz.router'
 import quizItemRouter from './src/router/quiz/quiz-item.route'
 import { quizHistoryService } from './src/service/quiz/quiz-history.service'
+import { ErrorCodes, UserDefinedError } from './src/db/common/common.error'
 
 
 const app = express();
@@ -47,7 +48,11 @@ app.use('/quiz-item', quizItemRouter)
 
 //error handler
 app.use((err, req, res, next) => {
-  res.status(400).send(err)
+  if (err instanceof UserDefinedError) {
+    if (err.code == ErrorCodes.DEFAULT + 3)
+      res.status(401).send(err)
+    else res.status(400).send(err)
+  }
 })
 
 

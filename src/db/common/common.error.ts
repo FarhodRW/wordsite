@@ -40,6 +40,14 @@ export class UserDefinedError {
     return new UserDefinedError(ErrorCodes.DEFAULT + 2, 'You don`t have permission to do that', data)
   }
 
+  static UnAthorizated(data: any = null) {
+    return new UserDefinedError(ErrorCodes.DEFAULT + 3, 'You are not authenticated', data)
+  }
+
+  static InvalidToken(data: any = null) {
+    return new UserDefinedError(ErrorCodes.DEFAULT + 4, 'Token is not valid', data)
+  }
+
   static Success(data: any = 'OK') {
     return new UserDefinedError(ErrorCodes.SUCCESS, 'Success', data)
   }
