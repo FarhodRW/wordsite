@@ -39,7 +39,7 @@ export class QuizCreateDto extends BaseDto {
     groups: [QuizCreateDtoGroup.CREATE],
     each: true
   })
-  tagIds: any[];
+  tagIds: string[];
 
 
 }

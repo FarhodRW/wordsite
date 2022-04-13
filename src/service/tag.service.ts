@@ -41,6 +41,36 @@ class TagService<T> extends CommonService<T> {
     const data = this.findByPaging(query, page, limit, [], $sort)
     return data;
   }
+
+  public async getForChoose(dto) {
+    const { page, limit, search, userId } = dto
+    let query: FilterQuery<Tag & Document> = {
+      isDeleted: false,
+    }
+
+    if (search) {
+      query = {
+        'name': {
+          $regex: search,
+          $options: 'i',
+        }
+      }
+    }
+
+
+    const $sort = {
+      createdAt: -1
+    }
+
+    const $project = {
+      $project: { name: 1, _id: 1 }
+    }
+    const data = this.findByPaging(query, page, limit, $project, $sort)
+    return data;
+  }
+
+
+
 }
 
 export const tagService = new TagService(TagModel);

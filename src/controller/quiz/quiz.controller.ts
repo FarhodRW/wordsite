@@ -16,6 +16,11 @@ export async function createQuizController(req, res, next) {
 
     const dto = await validateIt(req.body, QuizCreateDto, QuizCreateDtoGroup.CREATE)
     console.log("dtoooooo", dto)
+
+    if (!dto.size) {
+      const maxQuestions = await createQuizService.getMaxQuestions(dto)
+      return success(res, maxQuestions)
+    }
     const createdBy = dto.createdBy
     // const questions = await WordModel.aggregate([
     //   { $match: { isDeleted: false, createdBy: createdBy } },
@@ -101,7 +106,7 @@ export async function getQuizHistoryPagingController(req, res, next) {
   try {
 
 
-    const data = await validateIt(req.body, QuizHistoryGetDto, QuizDtoGroup.GET_PAGING);
+    const data = await validateIt(req.params, QuizHistoryGetDto, QuizDtoGroup.GET_PAGING);
 
     const histories = await quizHistoryService.getQuizHistoryByPaging(data, req.user._id);
 

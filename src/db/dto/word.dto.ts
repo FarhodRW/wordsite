@@ -39,6 +39,7 @@ export class WordDto extends BaseDto {
   @IsBoolean({ groups: [WordDtoGroup.CREATE, WordDtoGroup.UPDATE] })
   isPrivate: boolean
 
+  @IsOptional({ groups: [WordDtoGroup.CREATE, WordDtoGroup.UPDATE] })
   @IsEnum(WordTypes, {
     groups: [WordDtoGroup.UPDATE, WordDtoGroup.CREATE],
     each: true

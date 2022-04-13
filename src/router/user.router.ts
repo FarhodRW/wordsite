@@ -7,8 +7,8 @@ const router = express.Router()
 
 router.post('/register', createUserController)
 router.post('/login', loginUserController)
-router.get('/profile', verifyUserToken, getUserProfileController)
-router.put('/update', verifyUserToken, updateUserController)
-router.put('/delete', verifyUserToken, deleteUserController)
+router.get('/', verifyUserToken, getUserProfileController)
+router.put('/', verifyUserToken, updateUserController)
+router.delete('/', verifyUserToken, deleteUserController)
 
 export default router
