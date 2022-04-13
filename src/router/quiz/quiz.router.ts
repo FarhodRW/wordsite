@@ -7,7 +7,7 @@ import { verifyUserToken } from '../../middleware/userAuth'
 
 const router = express.Router()
 
-router.post('/create/:size', verifyUserToken, createQuizController)
+router.post('/create', verifyUserToken, createQuizController)
 router.post('/', verifyUserToken, getQuizHistoryPagingController)
 router.post('/finish/:id', verifyUserToken, updateQuizResultController)
 router.get('/history/:id', verifyUserToken, getQuizItemHistoryController)

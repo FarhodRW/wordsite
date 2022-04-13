@@ -1,45 +1,34 @@
 import { success } from "../../common/response";
 import { validateIt } from "../../common/validation";
 import { QuizDtoGroup, QuizHistoryGetDto } from "../../db/dto/quiz-history.dto";
+import { QuizCreateDto, QuizCreateDtoGroup } from "../../db/dto/quiz.dto";
 import { QuizItemDto, QuizItemDtoGroup } from "../../db/dto/quizItem.dto";
 import { QuizHistoryError } from "../../db/model/quiz/quiz-history.error";
 import { QuizHistory, QuizHistoryModel } from "../../db/model/quiz/quiz-history.model";
 import { QuizItemModel } from "../../db/model/quiz/quiz-item/quiz-item.model";
 import { WordModel } from "../../db/model/word/word.model";
+import { createQuizService } from "../../service/quiz/quiz-create.service";
 import { quizHistoryService } from "../../service/quiz/quiz-history.service";
 import { quizItemService } from "../../service/quiz/quiz-item.service";
 
 export async function createQuizController(req, res, next) {
   try {
-    const size = req.body.size
-    const createdBy = req.user._id
-    const isPrivate = req.body.private
-    const dateFrom = req.body.dateFrom
-    const dateTo = req.body.dateTo
 
-    const query = {
-      createdBy: createdBy,
-      isPrivate,
-      productTimeStamp: {
-        $gte: new Date(dateFrom),
-        $lte: new Date(dateTo)
-      }
-
-    }
-
-
-    const questions = await WordModel.aggregate([
-      { $match: query },
-      { $sample: { size: +size } },
-      { $project: { _id: 1, name: 1, defination: 1 } }])
-    if (!questions.length) throw QuizHistoryError.NotEnoughWord(size)
-    console.log(questions)
+    const dto = await validateIt(req.body, QuizCreateDto, QuizCreateDtoGroup.CREATE)
+    console.log("dtoooooo", dto)
+    const createdBy = dto.createdBy
+    // const questions = await WordModel.aggregate([
+    //   { $match: { isDeleted: false, createdBy: createdBy } },
+    //   { $sample: { size: +size } },
+    //   { $project: { _id: 1, name: 1, defination: 1 } }])
+    // console.log(questions)
+    const questions = await createQuizService.createQuiz(dto)
 
     const quizHistoryDto: QuizHistory = {
       createdBy,
-      timeLimit: +size * 60,
-      totalQuestions: +size,
-      finishingAt: new Date((new Date()).setSeconds(new Date().getSeconds() + size * 60))
+      timeLimit: +dto.size * 60,
+      totalQuestions: +dto.size,
+      finishingAt: new Date((new Date()).setSeconds(new Date().getSeconds() + dto.size * 60))
     }
     const quizHistory = await quizHistoryService.create(quizHistoryDto);
 

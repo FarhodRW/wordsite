@@ -22,7 +22,6 @@ class TagService<T> extends CommonService<T> {
     const { page, limit, search, userId } = dto
     let query: FilterQuery<Tag & Document> = {
       isDeleted: false,
-      createdBy: userId
     }
 
     if (search) {

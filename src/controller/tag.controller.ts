@@ -33,7 +33,6 @@ export async function updateTagController(req, res, next) {
 export async function getTagsByPagingController(req, res, next) {
   try {
     const dto = await validateIt(req.body, TagGetDto, TagDtoGroup.GET_PAGING)
-    dto.createdBy = req.user._id
     const tags = await tagService.getTagsByPaging(dto)
     success(res, tags)
   } catch (error) {
@@ -41,6 +40,8 @@ export async function getTagsByPagingController(req, res, next) {
     next(error)
   }
 }
+
+
 
 export async function deleteTagController(req, res, next) {
   try {
