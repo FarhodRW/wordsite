@@ -32,7 +32,7 @@ export async function updateTagController(req, res, next) {
 
 export async function getTagsByPagingController(req, res, next) {
   try {
-    const dto = await validateIt(req.params, TagGetDto, TagDtoGroup.GET_PAGING)
+    const dto = await validateIt(req.query, TagGetDto, TagDtoGroup.GET_PAGING)
     const tags = await tagService.getTagsByPaging(dto)
     success(res, tags)
   } catch (error) {

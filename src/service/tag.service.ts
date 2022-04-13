@@ -62,9 +62,10 @@ class TagService<T> extends CommonService<T> {
       createdAt: -1
     }
 
-    const $project = {
-      $project: { name: 1, _id: 1 }
-    }
+    const $project = [
+      { $project: { name: 1, _id: 1 } }
+    ]
+
     const data = this.findByPaging(query, page, limit, $project, $sort)
     return data;
   }

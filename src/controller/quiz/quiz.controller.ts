@@ -106,7 +106,7 @@ export async function getQuizHistoryPagingController(req, res, next) {
   try {
 
 
-    const data = await validateIt(req.params, QuizHistoryGetDto, QuizDtoGroup.GET_PAGING);
+    const data = await validateIt(req.query, QuizHistoryGetDto, QuizDtoGroup.GET_PAGING);
 
     const histories = await quizHistoryService.getQuizHistoryByPaging(data, req.user._id);
 
