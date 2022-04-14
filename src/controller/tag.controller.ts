@@ -41,6 +41,17 @@ export async function getTagsByPagingController(req, res, next) {
   }
 }
 
+export async function getForChooseController(req, res, next) {
+  try {
+    const dto = await validateIt(req.query, TagGetDto, TagDtoGroup.GET_PAGING)
+    const tags = await tagService.getForChoose(dto)
+    success(res, tags)
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
 
 
 export async function deleteTagController(req, res, next) {

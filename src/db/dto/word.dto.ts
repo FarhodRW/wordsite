@@ -46,6 +46,11 @@ export class WordDto extends BaseDto {
   })
   types: WordTypes[];
 
+  @IsOptional({ groups: [WordDtoGroup.CREATE, WordDtoGroup.UPDATE] })
+  @IsMongoId({
+    groups: [WordDtoGroup.CREATE, WordDtoGroup.UPDATE],
+  })
+  category?: string;
 }
 
 

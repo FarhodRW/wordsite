@@ -1,7 +1,9 @@
 import { getModelForClass, Index, modelOptions, prop, Ref } from "@typegoose/typegoose";
 import { CollectionNames } from "../../common/common.model";
 import { BaseModel } from "../baseModel";
+import { Category } from "../category/category.model";
 import { Tag } from "../tag/tag.model";
+import mongoose from "mongoose";
 
 export enum WordTypes {
   NOUN = 'noun',
@@ -10,6 +12,7 @@ export enum WordTypes {
   ADVERB = 'adverb',
   PRONOUN = 'pronoun'
 }
+
 
 @modelOptions({
   schemaOptions: {
@@ -46,6 +49,13 @@ export class Word extends BaseModel {
 
   @prop({ type: [String], enum: WordTypes })
   public type?: WordTypes[];
+
+  @prop({
+    type: mongoose.Types.ObjectId,
+    ref: CollectionNames.CATEGORIES
+  })
+  public category?: Ref<Category>;
+
 }
 
 export const WordModel = getModelForClass(Word);

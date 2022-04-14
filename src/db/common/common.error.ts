@@ -6,15 +6,16 @@ export enum ErrorCodes {
   WORDS = 3000,
   TAGS = 4000,
   QUIZ_HISTORY = 5000,
-  QUIZ_ITEM = 6000
+  QUIZ_ITEM = 6000,
+  CATEGORY = 7000
 }
 
 export enum ErrorItems {
   ITEM = 'item',
   USER = 'user',
   WORDS = 'words',
-  TAGS = 'tags'
-
+  TAGS = 'tags',
+  CATEGORIES = 'categories'
 }
 
 

@@ -78,7 +78,6 @@ export async function getPublicWordsByPagingController(req, res, next) {
 export async function deleteWordController(req, res, next) {
   try {
     const id = req.params.id
-
     const menu = await wordService.deleteById(id)
     success(res, 'success')
   } catch (error) {

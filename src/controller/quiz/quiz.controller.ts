@@ -16,21 +16,15 @@ export async function createQuizController(req, res, next) {
 
     const dto = await validateIt(req.body, QuizCreateDto, QuizCreateDtoGroup.CREATE)
     console.log("dtoooooo", dto)
+    dto.createdBy = req.user._id
 
-    if (!dto.size) {
-      const maxQuestions = await createQuizService.getMaxQuestions(dto)
-      return success(res, maxQuestions)
-    }
-    const createdBy = dto.createdBy
-    // const questions = await WordModel.aggregate([
-    //   { $match: { isDeleted: false, createdBy: createdBy } },
-    //   { $sample: { size: +size } },
-    //   { $project: { _id: 1, name: 1, defination: 1 } }])
-    // console.log(questions)
     const questions = await createQuizService.createQuiz(dto)
+    console.log("ddddddddddddddddd", questions);
+
+    if (!questions.length) throw QuizHistoryError.NotEnoughWord()
 
     const quizHistoryDto: QuizHistory = {
-      createdBy,
+      createdBy: dto.createdBy,
       timeLimit: +dto.size * 60,
       totalQuestions: +dto.size,
       finishingAt: new Date((new Date()).setSeconds(new Date().getSeconds() + dto.size * 60))
@@ -80,6 +74,16 @@ export async function createQuizController(req, res, next) {
     next(error)
   }
 }
+
+export async function getMaxQuestionsController(req, res, next) {
+  const dto = await validateIt(req.body, QuizCreateDto, QuizCreateDtoGroup.CREATE)
+  console.log("dtoooooo", dto)
+  dto.createdBy = req.user._id
+
+  const questions = await createQuizService.getMax(dto)
+  success(res, questions)
+}
+
 
 export async function updateQuizItems(req, res, next) {
   try {

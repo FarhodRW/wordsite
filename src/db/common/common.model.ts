@@ -3,5 +3,6 @@ export enum CollectionNames {
   WORDS = 'words',
   TAGS = 'tags',
   QUIZ_HISTORY = 'quizHistory',
-  QUIZ_ITEMS = 'quizItems'
+  QUIZ_ITEMS = 'quizItems',
+  CATEGORIES = 'categories'
 }

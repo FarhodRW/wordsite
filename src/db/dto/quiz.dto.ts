@@ -1,5 +1,6 @@
 import { Transform, Type } from "class-transformer";
-import { IsArray, IsBoolean, IsDateString, IsEmail, IsMongoId, IsNumber, isNumberString, IsOptional, IsString, ValidateNested } from "class-validator";
+import { IsArray, IsBoolean, IsDateString, IsEmail, IsEnum, IsMongoId, IsNumber, isNumberString, IsOptional, IsString, ValidateNested } from "class-validator";
+import { Visiblity } from "../model/quiz/quiz-history.model";
 import { BaseDto, BaseDtoGroup, BasePagingDto } from "./base.dto";
 
 export class QuizCreateDtoGroup extends BaseDtoGroup {
@@ -19,9 +20,15 @@ export class QuizCreateDto extends BaseDto {
   @IsOptional({ groups: [QuizCreateDtoGroup.CREATE] })
   size?: number;
 
+  // @IsOptional({ groups: [QuizCreateDtoGroup.CREATE] })
+  // @IsBoolean({ groups: [QuizCreateDtoGroup.CREATE] })
+  // isPrivate?: boolean
   @IsOptional({ groups: [QuizCreateDtoGroup.CREATE] })
-  @IsBoolean({ groups: [QuizCreateDtoGroup.CREATE] })
-  isPrivate?: boolean
+  @IsEnum(Visiblity, {
+    groups: [QuizCreateDtoGroup.CREATE],
+    each: true
+  })
+  visiblity: Visiblity;
 
   @IsOptional({ groups: [QuizCreateDtoGroup.CREATE] })
   @IsDateString({ groups: [QuizCreateDtoGroup.CREATE] })

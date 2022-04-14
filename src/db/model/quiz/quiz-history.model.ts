@@ -3,6 +3,15 @@ import { CollectionNames } from "../../common/common.model";
 import { BaseModel } from "../baseModel";
 
 
+export enum Visiblity {
+  PUBLIC = 'public',
+  PRIVATE = 'private',
+  BOTH = 'both'
+}
+
+
+
+
 @modelOptions({
   schemaOptions: {
     collection: CollectionNames.QUIZ_HISTORY
@@ -30,6 +39,9 @@ export class QuizHistory extends BaseModel {
 
   @prop({})
   totalQuestions: number;
+
+  @prop({ type: [String], enum: Visiblity })
+  public visiblity?: Visiblity;
 
 }
 

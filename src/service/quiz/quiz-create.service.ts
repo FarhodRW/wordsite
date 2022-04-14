@@ -2,8 +2,7 @@ import { QuizCreateDto } from "../../db/dto/quiz.dto";
 import { CommonService } from "../base.service";
 import { Model } from 'mongoose'
 import { WordModel } from "../../db/model/word/word.model";
-import { ObjectId, Types } from 'mongoose'
-import { tagService } from "../tag.service";
+import { Visiblity } from "../../db/model/quiz/quiz-history.model";
 
 class CreateQuizService<T> extends CommonService<T> {
   constructor(model: Model<T>) {
@@ -11,11 +10,12 @@ class CreateQuizService<T> extends CommonService<T> {
   }
 
   public async createQuiz(dto: QuizCreateDto) {
-    const { size, createdBy, isPrivate, dateFrom, dateTo, tagIds } = dto
+    const { size, createdBy, dateFrom, dateTo, tagIds, visiblity } = dto
     let query: any = { isDeleted: false }
 
     if (createdBy) query.createdBy = dto.createdBy
-    if (isPrivate) query.isPrivate = isPrivate;
+    if (visiblity == Visiblity.PUBLIC) query.isPrivate = false
+    else if (visiblity == Visiblity.PRIVATE) query.isPrivate = true
     if (tagIds && tagIds.length) {
 
       query.tags = {
@@ -48,13 +48,15 @@ class CreateQuizService<T> extends CommonService<T> {
     return questions
   }
 
-  public async getMaxQuestions(dto) {
-    const { size, createdBy, isPrivate, dateFrom, dateTo, tagIds } = dto
+  public async getMax(dto: QuizCreateDto) {
+    const { size, createdBy, dateFrom, dateTo, tagIds, visiblity } = dto
     let query: any = { isDeleted: false }
 
     if (createdBy) query.createdBy = dto.createdBy
-    if (isPrivate) query.isPrivate = isPrivate;
+    if (visiblity == Visiblity.PUBLIC) query.isPrivate = false
+    else if (visiblity == Visiblity.PRIVATE) query.isPrivate = true
     if (tagIds && tagIds.length) {
+
       query.tags = {
         $in: tagIds
       }
@@ -74,9 +76,8 @@ class CreateQuizService<T> extends CommonService<T> {
         $lte: new Date(dateTo)
       }
     }
-
-    const maxQuestions = await this.model.countDocuments(query)
-    return maxQuestions
+    const maximum = await this.model.countDocuments(query)
+    return maximum
   }
 
 }
