@@ -3,11 +3,38 @@ import { Word, WordModel } from "../db/model/word/word.model";
 import { Model, FilterQuery } from 'mongoose'
 import { CollectionNames } from "../db/common/common.model";
 import { Visiblity } from "../db/model/quiz/quiz-history.model";
+import { WordDto } from "../db/dto/word.dto";
 
 
 class WordService<T> extends CommonService<T> {
   constructor(model: Model<T>) {
     super(model)
+  }
+
+  public async save(dto: WordDto) {
+
+    try {
+      const word = await this.create(dto);
+      return word;
+    } catch (e) {
+      console.log(e);
+      // if (e.code == 11000) {
+
+      // }
+    }
+  }
+
+  public async updateById(id, dto) {
+
+    try {
+      const word = await this.updateById(id, dto);
+      return word;
+    } catch (e) {
+      console.log(e);
+      // if (e.code == 11000) {
+
+      // }
+    }
   }
 
   public async getWordsByPaging(dto) {
@@ -223,6 +250,15 @@ class WordService<T> extends CommonService<T> {
       total,
       data
     };
+  }
+
+
+  public async deleteById(id) {
+    const update = {
+      isDeleted: true
+    }
+
+    return this.updateById(id, update);
   }
 
 

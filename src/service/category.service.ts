@@ -1,7 +1,6 @@
 import { CommonService } from "./base.service";
-import { Tag, TagModel } from "../db/model/tag/tag.model";
 import { Model, FilterQuery } from 'mongoose'
-import { CategoryModel } from "../db/model/category/category.model";
+import { Category, CategoryModel } from "../db/model/category/category.model";
 import { CategoryDto } from "../db/dto/category.dto";
 
 
@@ -10,20 +9,44 @@ class CategoryService<T> extends CommonService<T> {
     super(model)
   }
 
-  // public async saveCategoryService(name: string) {
-  //   const tagDto: Tag = {
-  //     name
-  //   }
-  //   console.log(name, tagDto)
-  //   const tag = await this.findByQuery({ name });
-  //   if (!tag) return this.create(tagDto);
-  //   return tag;
-  // }
+  public async save(dto: CategoryDto) {
+
+    try {
+      const category = await this.create(dto);
+      return category;
+    } catch (e) {
+      console.log(e);
+      // if (e.code == 11000) {
+
+      // }
+    }
+  }
+
+  public async updateById(id, dto) {
+
+    try {
+      const category = await this.updateById(id, dto);
+      return category;
+    } catch (e) {
+      console.log(e);
+      // if (e.code == 11000) {
+
+      // }
+    }
+  }
+
+  public async deleteById(id) {
+    const update = {
+      isDeleted: true
+    }
+
+    return this.updateById(id, update);
+  }
 
 
-  public async getTagsByPaging(dto) {
+  public async getByPaging(dto) {
     const { page, limit, search, createdBy } = dto
-    let query: FilterQuery<Tag & Document> = {
+    let query: FilterQuery<Category & Document> = {
       isDeleted: false,
       createdBy: createdBy
     }
@@ -48,7 +71,7 @@ class CategoryService<T> extends CommonService<T> {
 
   public async getForChoose(dto) {
     const { page, limit, search, createdBy } = dto
-    let query: FilterQuery<Tag & Document> = {
+    let query: FilterQuery<Category & Document> = {
       isDeleted: false,
       createdBy: createdBy
     }

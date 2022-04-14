@@ -1,9 +1,9 @@
 import { getModelForClass, Index, modelOptions, prop, Ref } from "@typegoose/typegoose";
+import { Types } from "mongoose";
 import { CollectionNames } from "../../common/common.model";
 import { BaseModel } from "../baseModel";
 import { Category } from "../category/category.model";
 import { Tag } from "../tag/tag.model";
-import { Types } from "mongoose";
 
 export enum WordTypes {
   NOUN = 'noun',
@@ -22,7 +22,9 @@ export enum WordTypes {
 
 @Index(
   {
-    name: 1
+    name: 1,
+    createdBy: 1,
+    types: 1
   },
   {
     name: 'name',

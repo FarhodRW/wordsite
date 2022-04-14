@@ -1,12 +1,11 @@
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { success } from "../common/response";
 import { validateIt } from "../common/validation";
 import { UserDto, UserDtoGroup } from "../db/dto/user.dto";
-import bcrypt from 'bcrypt'
-import { userService } from "../service/user.service";
-import { success } from "../common/response";
-import { ErrorCodes, ErrorItems, UserDefinedError } from "../db/common/common.error";
-import jwt from 'jsonwebtoken'
 import { UserError } from "../db/model/user/user.error";
 import { UserModel } from "../db/model/user/user.model";
+import { userService } from "../service/user.service";
 
 
 export async function createUserController(req, res, next) {
@@ -15,12 +14,13 @@ export async function createUserController(req, res, next) {
     const user = await UserModel.findOne({ email: dto.email })
     if (user) throw UserError.AlreadyExists(user.email)
     dto.password = await bcrypt.hash(dto.password, 8)
-    const data = await userService.create(dto);
+    const data = await userService.save(dto);
     success(res, data)
   } catch (error) {
     next(error)
   }
 }
+
 
 
 export async function loginUserController(req, res, next) {
@@ -41,8 +41,7 @@ export async function loginUserController(req, res, next) {
 export async function getUserProfileController(req, res, next) {
   try {
     const id = req.user._id
-    console.log(id)
-    const user = await userService.findById(id, '-password')
+    const user = await userService.findById(id)
     success(res, user)
   } catch (error) {
     next(error)
@@ -54,10 +53,8 @@ export async function updateUserController(req, res, next) {
   try {
     const id = req.user._id
     const dto = await validateIt(req.body, UserDto, UserDtoGroup.UPDATE)
-    console.log(dto)
     if (dto.password)
       dto.password = await bcrypt.hash(dto.password, 8)
-    console.log(dto.password);
 
     const user = await userService.updateById(id, dto)
     success(res, user)

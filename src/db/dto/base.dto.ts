@@ -41,4 +41,5 @@ export class BasePagingDto {
     groups: [BaseDtoGroup.GET_PAGING, BaseDtoGroup.CHOOSE]
   })
   search?: string;
+  createdBy?;
 }

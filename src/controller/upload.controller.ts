@@ -1,5 +1,5 @@
 import { success } from "../common/response";
-import { UserDefinedError } from "../db/common/common.error"
+import { UserDefinedError } from "../db/common/common.error";
 
 
 export async function uploadController(req, res) {

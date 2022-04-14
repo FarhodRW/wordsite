@@ -1,6 +1,5 @@
 import { success } from "../common/response";
 import { validateIt } from "../common/validation";
-import { ErrorCodes, ErrorItems, UserDefinedError } from "../db/common/common.error";
 import { WordDto, WordDtoGroup, WordGetDto } from "../db/dto/word.dto";
 import { tagService } from "../service/tag.service";
 import { wordService } from "../service/word.service";
@@ -20,14 +19,12 @@ export async function createWordController(req, res, next) {
     dto.tags = tagIds;
     console.log("dtoooooooooooooooooooo", dto);
 
-    const data = await wordService.create(dto);
+    const data = await wordService.save(dto);
     success(res, data)
   } catch (error) {
     next(error)
   }
 }
-
-
 
 
 export async function updateWordController(req, res, next) {

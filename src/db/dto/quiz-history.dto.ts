@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer";
-import { IsEmail, IsNumber, isNumberString, IsOptional, IsString, MinLength } from "class-validator";
+import { IsNumber, isNumberString } from "class-validator";
 import { BaseDto, BaseDtoGroup, BasePagingDto } from "./base.dto";
 
 export class QuizDtoGroup extends BaseDtoGroup {

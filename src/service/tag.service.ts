@@ -71,6 +71,25 @@ class TagService<T> extends CommonService<T> {
   }
 
 
+  public async updateById(id, dto) {
+
+    try {
+      const tag = await this.updateById(id, dto);
+      return tag;
+    } catch (e) {
+      console.log(e);
+
+    }
+  }
+
+  public async deleteById(id) {
+    const update = {
+      isDeleted: true
+    }
+
+    return this.updateById(id, update);
+  }
+
 
 }
 

@@ -14,15 +14,10 @@ export class CategoryDto extends BaseDto {
   })
   name: string;
 
-  @IsOptional({
-    groups: [CategoryDtoGroup.CREATE]
-  })
   @IsMongoId({
     groups: [CategoryDtoGroup.UPDATE]
   })
-  _id: string;
-
-
+  parentId?: string;
 }
 
 

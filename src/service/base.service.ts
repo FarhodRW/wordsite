@@ -5,50 +5,50 @@ import { ErrorCodes, ErrorItems, UserDefinedError } from '../db/common/common.er
 export class CommonService<T>{
   constructor(public model: Model<T>) { }
 
-  public async create(dto, options?: SaveOptions, project?: { __v: 0 }) {
+  protected async create(dto, options?: SaveOptions, project?: { __v: 0 }) {
 
     const data = await this.model.create([dto], options);
     return this.model.findById(data[0]._id, project);
   }
 
-  public async createMany(dto, options: InsertManyOptions, project?: { __v: 0 }) {
+  protected async createMany(dto, options: InsertManyOptions, project?: { __v: 0 }) {
     const data = this.model.insertMany([dto], options)
     return data;
   }
 
-  public async findById(id: any, project?: any, options?: QueryOptions) {
+  protected async findById(id: any, project?: any, options?: QueryOptions) {
     const data = await this.model.findById(id, project, options);
     return data
   }
 
-  public async findByQuery(query) {
+  protected async findByQuery(query) {
     const data = await this.model.findOne(query)
     return data
   }
 
-  public async updateById(id: any, dto, options?: boolean) {
+  protected async updateById(id: any, dto, options?: boolean) {
     if (!options)
       options = true;
     const data = await this.model.findByIdAndUpdate(id, { $set: dto }, { new: options })
     return data
   }
 
-  public async updateByQuery(filter: FilterQuery<T>, dto: any, options?: QueryOptions) {
+  protected async updateByQuery(filter: FilterQuery<T>, dto: any, options?: QueryOptions) {
     let data = await this.model.updateOne({ filter }, { $set: dto }, { options })
     return data
   }
 
-  public async deleteById(id: any, options?: QueryOptions,) {
+  protected async deleteById(id: any, options?: QueryOptions,) {
     const data = await this.model.findByIdAndDelete(id, options,)
     return data
   }
 
-  public async deleteMany(query: any) {
+  protected async deleteMany(query: any) {
     const data = await this.model.deleteMany(query)
     return data
   }
 
-  public async findByPaging(query, page: number, limit: number, add_pipeline = [], sort?) {
+  protected async findByPaging(query, page: number, limit: number, add_pipeline = [], sort?) {
     const $match = {
       $match: query
     }
@@ -81,12 +81,12 @@ export class CommonService<T>{
 
   }
 
-  public async aggregate(pipeline = []) {
+  protected async aggregate(pipeline = []) {
     return await this.model.aggregate(pipeline);
   }
 
 
-  public async countDocuments(query: any) {
+  protected async countDocuments(query: any) {
     const data = await this.model.countDocuments(query)
     return data
   }
