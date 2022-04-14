@@ -3,7 +3,7 @@ import { CollectionNames } from "../../common/common.model";
 import { BaseModel } from "../baseModel";
 import { Category } from "../category/category.model";
 import { Tag } from "../tag/tag.model";
-import mongoose from "mongoose";
+import { Types } from "mongoose";
 
 export enum WordTypes {
   NOUN = 'noun',
@@ -48,10 +48,10 @@ export class Word extends BaseModel {
   public isPrivate: boolean;
 
   @prop({ type: [String], enum: WordTypes })
-  public type?: WordTypes[];
+  public types?: WordTypes[];
 
   @prop({
-    type: mongoose.Types.ObjectId,
+    type: Types.ObjectId,
     ref: CollectionNames.CATEGORIES
   })
   public category?: Ref<Category>;

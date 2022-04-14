@@ -18,6 +18,8 @@ export async function createWordController(req, res, next) {
       }
     }
     dto.tags = tagIds;
+    console.log("dtoooooooooooooooooooo", dto);
+
     const data = await wordService.create(dto);
     success(res, data)
   } catch (error) {

@@ -9,6 +9,7 @@ import userRouter from './src/router/user.router'
 import tagRouter from './src/router/tag.router'
 import wordRouter from './src/router/word.router'
 import quizRouter from './src/router/quiz/quiz.router'
+import categoryRouter from './src/router/category.router'
 import { quizHistoryService } from './src/service/quiz/quiz-history.service'
 import { ErrorCodes, UserDefinedError } from './src/db/common/common.error'
 
@@ -41,6 +42,7 @@ app.use('/user', userRouter)
 app.use('/tag', tagRouter)
 app.use('/word', wordRouter)
 app.use('/quiz', quizRouter)
+app.use('/category', categoryRouter)
 
 
 
