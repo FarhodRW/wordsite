@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.post('/', verifyUserToken, createWordController)
 router.put('/:id', verifyUserToken, updateWordController)
-router.get('/my-words', verifyUserToken, getWordsByPagingController)
+router.post('/my-words', verifyUserToken, getWordsByPagingController)
 router.get('/', getPublicWordsByPagingController)
 router.delete('/:id', verifyUserToken, deleteWordController)
 

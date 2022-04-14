@@ -1,5 +1,6 @@
 import { Type } from "class-transformer";
-import { IsArray, IsBoolean, IsEmail, IsEnum, IsMongoId, IsOptional, IsString, ValidateNested } from "class-validator";
+import { IsArray, IsBoolean, IsDateString, IsEmail, IsEnum, IsMongoId, IsOptional, IsString, ValidateNested } from "class-validator";
+import { Visiblity } from "../model/quiz/quiz-history.model";
 import { Tag } from "../model/tag/tag.model";
 import { WordTypes } from "../model/word/word.model";
 import { BaseDto, BaseDtoGroup, BasePagingDto } from "./base.dto";
@@ -62,4 +63,29 @@ export class WordGetDto extends BasePagingDto {
     groups: [BaseDtoGroup.GET_PAGING, BaseDtoGroup.CHOOSE]
   })
   createdBy?;
+
+  @IsOptional({ groups: [BaseDtoGroup.GET_PAGING] })
+  @IsEnum(Visiblity, {
+    groups: [BaseDtoGroup.GET_PAGING],
+    each: true
+  })
+  visiblity: Visiblity;
+
+  @IsOptional({ groups: [BaseDtoGroup.GET_PAGING] })
+  @IsDateString({ groups: [BaseDtoGroup.GET_PAGING] })
+  dateFrom: Date;
+
+  @IsOptional({ groups: [BaseDtoGroup.GET_PAGING] })
+  @IsDateString({ groups: [BaseDtoGroup.GET_PAGING] })
+  dateTo: Date;
+
+  @IsOptional({ groups: [BaseDtoGroup.GET_PAGING] })
+  @IsArray({
+    groups: [BaseDtoGroup.GET_PAGING]
+  })
+  @IsMongoId({
+    groups: [BaseDtoGroup.GET_PAGING],
+    each: true
+  })
+  tagIds: string[];
 }
