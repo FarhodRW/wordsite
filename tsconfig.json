@@ -12,6 +12,10 @@
     "emitDecoratorMetadata": true,
     "composite": false,
     "strictNullChecks": false,
-    "outDir": "./dist"
+    "outDir": "./dist",
+     "typeRoots": [
+      "./src/typings",
+      "./node_modules/@types"
+    ] /* List of folders to include type definitions from. */,
   }
 }

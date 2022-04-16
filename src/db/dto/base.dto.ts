@@ -22,7 +22,7 @@ export class BasePagingDto {
   @IsNumber({}, {
     groups: [BaseDtoGroup.GET_PAGING, BaseDtoGroup.CHOOSE]
   })
-  page: number;
+  page: number = 1;
 
   @Expose({ toClassOnly: true })
   @Transform(({ value }) => {

@@ -4,7 +4,6 @@ import morgan from 'morgan'
 import 'dotenv/config'
 import cors from 'cors'
 import cron from 'node-cron'
-
 import userRouter from './src/router/user.router'
 import tagRouter from './src/router/tag.router'
 import wordRouter from './src/router/word.router'
@@ -12,7 +11,10 @@ import quizRouter from './src/router/quiz/quiz.router'
 import categoryRouter from './src/router/category.router'
 import { quizHistoryService } from './src/service/quiz/quiz-history.service'
 import { ErrorCodes, UserDefinedError } from './src/db/common/common.error'
-
+import passport from 'passport'
+import session from 'express-session'
+import "./src/common/passport-setup"
+import authRoutes from './src/router/authRoutes'
 
 const app = express();
 
@@ -35,6 +37,16 @@ cron.schedule('*/2 * * * * *', () => {
 app.use(express.json())
 app.use(morgan('tiny'))
 
+//session
+app.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: 'SECRET'
+}));
+
+//passort middleware
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 //routes
@@ -43,8 +55,7 @@ app.use('/tag', tagRouter)
 app.use('/word', wordRouter)
 app.use('/quiz', quizRouter)
 app.use('/category', categoryRouter)
-
-
+app.use("/auth", authRoutes);
 
 //error handler
 app.use((err, req, res, next) => {

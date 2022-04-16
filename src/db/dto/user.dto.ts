@@ -4,6 +4,7 @@ import { BaseDto, BaseDtoGroup, BasePagingDto } from "./base.dto";
 export class UserDtoGroup extends BaseDtoGroup {
   static LOGIN = 'login'
   static REGISTER = 'register'
+  static OAUTH = 'oauth'
 }
 
 export class UserDto extends BaseDto {
@@ -15,13 +16,15 @@ export class UserDto extends BaseDto {
   })
   name: string;
 
+
+  @IsOptional({ groups: [UserDtoGroup.OAUTH] })
   @IsEmail({ groups: [UserDtoGroup.REGISTER, UserDtoGroup.LOGIN] })
   @IsString({ groups: [UserDtoGroup.REGISTER, UserDtoGroup.LOGIN] })
   email: string;
 
 
   @IsOptional({
-    groups: [UserDtoGroup.UPDATE]
+    groups: [UserDtoGroup.UPDATE, UserDtoGroup.OAUTH]
   })
   @IsString({
     groups: [UserDtoGroup.REGISTER, UserDtoGroup.UPDATE, UserDtoGroup.LOGIN]
@@ -39,6 +42,18 @@ export class UserDto extends BaseDto {
     groups: [UserDtoGroup.CREATE, UserDtoGroup.UPDATE]
   })
   image: string;
+
+  @IsOptional({
+    groups: [UserDtoGroup.CREATE, UserDtoGroup.UPDATE]
+  })
+  @IsString({ groups: [UserDtoGroup.OAUTH] })
+  googleId: string
+
+  @IsOptional({
+    groups: [UserDtoGroup.CREATE, UserDtoGroup.UPDATE]
+  })
+  @IsString({ groups: [UserDtoGroup.OAUTH] })
+  facebookId: string
 
 }
 

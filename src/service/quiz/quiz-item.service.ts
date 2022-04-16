@@ -8,6 +8,20 @@ class QuizItemService<T> extends CommonService<T> {
     super(model)
   }
 
+  public async save(dto) {
+
+    try {
+      const question = await this.create(dto);
+      return question;
+    } catch (e) {
+      console.log(e);
+      // if (e.code == 11000) {
+
+      // }
+    }
+  }
+
+
   public async getQuizItemByQuizId(quizHistoryId: Types.ObjectId) {
     const $match = {
       $match: {

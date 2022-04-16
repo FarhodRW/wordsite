@@ -1,8 +1,7 @@
 import express from 'express'
 import { createCategoryController, deleteCategoryController, getCategoriesByPagingController, getForChooseCategoryController, updateCategoryController } from '../controller/category.controller'
-import { createTagController, deleteTagController, getForChooseController, getTagsByPagingController, updateTagController } from '../controller/tag.controller'
-
 import { verifyUserToken } from '../middleware/userAuth'
+
 
 const router = express.Router()
 

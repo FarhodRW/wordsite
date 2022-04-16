@@ -30,12 +30,17 @@ export class User extends BaseModel {
   @prop({ required: true })
   public email!: string;
 
-  @prop({ required: true })
-  public password!: string;
+  @prop({})
+  public password?: string;
 
   @prop({})
   public image?: string;
 
+  @prop({})
+  public googleId: string;
+
+  @prop({})
+  public facebookId: string
 }
 
 export const UserModel = getModelForClass(User);

@@ -1,13 +1,31 @@
-import { CommonService } from "../base.service";
-import { Model, Types, Document } from 'mongoose'
-import { QuizHistory, QuizHistoryModel } from "../../db/model/quiz/quiz-history.model";
-import { quizItemService } from "./quiz-item.service";
 import { Ref } from "@typegoose/typegoose";
-import { QuizHistoryGetDto } from "../../db/dto/quiz-history.dto";
+import { Document, Model, Types } from 'mongoose';
+import { QuizHistoryDto, QuizHistoryGetDto } from "../../db/dto/quiz-history.dto";
+import { QuizHistory, QuizHistoryModel } from "../../db/model/quiz/quiz-history.model";
+import { CommonService } from "../base.service";
+import { quizItemService } from "./quiz-item.service";
 
 class QuizHistoryService<T> extends CommonService<T> {
   constructor(model: Model<T>) {
     super(model)
+  }
+
+  public async save(dto: QuizHistory) {
+
+    try {
+      const quiz = await this.create(dto);
+      return quiz;
+    } catch (e) {
+      console.log(e);
+      // if (e.code == 11000) {
+
+      // }
+    }
+  }
+
+  public async findById(id) {
+    const quiz = await this.model.findById(id)
+    return quiz
   }
 
 
@@ -44,6 +62,21 @@ class QuizHistoryService<T> extends CommonService<T> {
     return quizes;
 
   }
+
+
+  public async updateById(id, dto) {
+
+    try {
+      const category = await this.updateById(id, dto);
+      return category;
+    } catch (e) {
+      console.log(e);
+      // if (e.code == 11000) {
+
+      // }
+    }
+  }
+
 }
 
 

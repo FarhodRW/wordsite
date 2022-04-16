@@ -29,7 +29,7 @@ export async function createQuizController(req, res, next) {
       totalQuestions: +dto.size,
       finishingAt: new Date((new Date()).setSeconds(new Date().getSeconds() + dto.size * 60))
     }
-    const quizHistory = await quizHistoryService.create(quizHistoryDto);
+    const quizHistory = await quizHistoryService.save(quizHistoryDto);
 
     for (const question of questions) {
       const variants = await WordModel.aggregate([{ $sample: { size: 4 } }])
@@ -59,7 +59,7 @@ export async function createQuizController(req, res, next) {
       question.wordId = question._id;
       question.quizHistoryId = quizHistory._id;
       delete question._id;
-      await quizItemService.create(question);
+      await quizItemService.save(question);
     }
 
     const quizItems = await quizItemService.getQuizItemByQuizId(quizHistory._id);
