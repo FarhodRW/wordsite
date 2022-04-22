@@ -139,6 +139,17 @@ class WordService<T> extends CommonService<T> {
       }
     }
 
+    const $project = {
+      $project: {
+        _id: 1,
+        name: 1,
+        createdAt: 1,
+        defination: 1,
+        tags: [],
+        isPrivate: 1
+      }
+    }
+
     const pipeline = [
       $match,
       $lookupTags,
@@ -146,7 +157,8 @@ class WordService<T> extends CommonService<T> {
       $group,
       $sort,
       $skip,
-      $limit
+      $limit,
+      // $project
     ]
 
     const total = await this.countDocuments(query);

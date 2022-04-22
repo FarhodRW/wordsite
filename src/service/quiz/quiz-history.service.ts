@@ -64,13 +64,14 @@ class QuizHistoryService<T> extends CommonService<T> {
   }
 
 
-  public async updateById(id, dto) {
+  public async updateQuizById(id, dto) {
 
     try {
       const category = await this.updateById(id, dto);
       return category;
     } catch (e) {
       console.log(e);
+      throw e;
       // if (e.code == 11000) {
 
       // }

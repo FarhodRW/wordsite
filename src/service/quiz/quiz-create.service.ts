@@ -13,9 +13,12 @@ class CreateQuizService<T> extends CommonService<T> {
     const { size, createdBy, dateFrom, dateTo, tagIds, visiblity } = dto
     let query: any = { isDeleted: false }
 
-    if (createdBy) query.createdBy = dto.createdBy
+    // if (createdBy) query.createdBy = dto.createdBy
     if (visiblity == Visiblity.PUBLIC) query.isPrivate = false
-    else if (visiblity == Visiblity.PRIVATE) query.isPrivate = true
+    else if (visiblity == Visiblity.PRIVATE) {
+      query.isPrivate = true
+      query.createdBy = dto.createdBy
+    }
     if (tagIds && tagIds.length) {
 
       query.tags = {
