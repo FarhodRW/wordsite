@@ -37,7 +37,8 @@ export async function createQuizController(req, res, next) {
       let options = [];
       let ansIndex = Math.floor(Math.random() * 4);
 
-      variants.forEach((item, index) => {
+      for (const variant of variants) {
+        const index = variants.indexOf(variant);
         if (index == ansIndex) {
           options.push({
             name: question.defination,
@@ -46,15 +47,13 @@ export async function createQuizController(req, res, next) {
             isAnswer: true
           })
         }
-        if (item._id.toString() !== question._id.toString() && options.length < 4
-
-        )
+        if (variant._id.toString() !== question._id.toString() && options.length < 4)
           options.push({
-            name: item.defination,
-            wordId: item._id,
-            _id: item._id
+            name: variant.defination,
+            wordId: variant._id,
+            _id: variant._id
           })
-      })
+      }
 
       question.variants = options;
       question.wordId = question._id;
@@ -137,7 +136,7 @@ export async function getQuizHistoryByIdController(req, res, next) {
 export async function updateQuizResultController(req, res, next) {
   try {
     const id = req.params.id;
-    const quiz = await quizHistoryService.updateById(id, { "isFinished": true, "finishedAt": new Date() })
+    const quiz = await quizHistoryService.updateQuizById(id, { "isFinished": true, "finishedAt": new Date() })
 
     success(res, quiz);
   } catch (error) {
