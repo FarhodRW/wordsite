@@ -43,7 +43,7 @@ export async function updateWordController(req, res, next) {
     }
     dto.tags = tagIds;
     console.log(dto);
-    const menu = await wordService.updateById(id, dto)
+    const menu = await wordService.updateWordById(id, dto)
     success(res, menu)
   } catch (error) {
     next(error)
@@ -77,8 +77,8 @@ export async function getPublicWordsByPagingController(req, res, next) {
 export async function deleteWordController(req, res, next) {
   try {
     const id = req.params.id
-    const menu = await wordService.deleteById(id)
-    success(res, 'success')
+    const menu = await wordService.updateById(id, { isDeleted: true })
+    return success(res, 'success')
   } catch (error) {
     next(error)
   }

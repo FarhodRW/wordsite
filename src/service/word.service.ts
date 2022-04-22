@@ -24,7 +24,7 @@ class WordService<T> extends CommonService<T> {
     }
   }
 
-  public async updateById(id, dto) {
+  public async updateWordById(id, dto) {
 
     try {
       const word = await this.updateById(id, dto);
@@ -34,6 +34,7 @@ class WordService<T> extends CommonService<T> {
       // if (e.code == 11000) {
 
       // }
+      throw e;
     }
   }
 
@@ -260,7 +261,6 @@ class WordService<T> extends CommonService<T> {
 
     return this.updateById(id, update);
   }
-
 
 }
 
