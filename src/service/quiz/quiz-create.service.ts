@@ -1,8 +1,8 @@
+import { Model, Types } from 'mongoose';
 import { QuizCreateDto } from "../../db/dto/quiz.dto";
-import { CommonService } from "../base.service";
-import { Model } from 'mongoose'
-import { WordModel } from "../../db/model/word/word.model";
 import { Visiblity } from "../../db/model/quiz/quiz-history.model";
+import { WordModel } from "../../db/model/word/word.model";
+import { CommonService } from "../base.service";
 
 class CreateQuizService<T> extends CommonService<T> {
   constructor(model: Model<T>) {
@@ -13,13 +13,14 @@ class CreateQuizService<T> extends CommonService<T> {
     const { size, createdBy, dateFrom, dateTo, tagIds, visiblity } = dto
     let query: any = { isDeleted: false }
 
-    if (createdBy) query.createdBy = dto.createdBy
     if (visiblity == Visiblity.PUBLIC) query.isPrivate = false
-    else if (visiblity == Visiblity.PRIVATE) query.isPrivate = true
+    else if (visiblity == Visiblity.PRIVATE) {
+      query.isPrivate = true;
+      query.createdBy = createdBy
+    }
     if (tagIds && tagIds.length) {
-
       query.tags = {
-        $in: tagIds
+        $in: tagIds.map(tagId => new Types.ObjectId(tagId))
       }
     }
 

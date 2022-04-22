@@ -40,6 +40,9 @@ export class Word extends BaseModel {
   @prop({ required: true })
   public name!: string;
 
+  @prop({})
+  public pron: string;
+
   @prop({ required: true })
   public defination!: string;
 

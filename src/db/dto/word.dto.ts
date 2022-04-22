@@ -25,6 +25,14 @@ export class WordDto extends BaseDto {
   })
   name: string;
 
+  @IsOptional({
+    groups: [WordDtoGroup.UPDATE, WordDtoGroup.CREATE]
+  })
+  @IsString({
+    groups: [WordDtoGroup.CREATE, WordDtoGroup.UPDATE]
+  })
+  pron: string;
+
   @IsString({ groups: [WordDtoGroup.CREATE, WordDtoGroup.UPDATE] })
   defination: string;
 

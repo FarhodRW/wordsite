@@ -12,6 +12,7 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
+
     res.redirect('/word?page=1&limit=3')
   }
 )

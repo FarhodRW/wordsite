@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { success } from "../../common/response";
 import { validateIt } from "../../common/validation";
 import { QuizDtoGroup, QuizHistoryGetDto } from "../../db/dto/quiz-history.dto";

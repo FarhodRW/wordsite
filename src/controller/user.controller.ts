@@ -5,6 +5,7 @@ import { validateIt } from "../common/validation";
 import { UserDto, UserDtoGroup } from "../db/dto/user.dto";
 import { UserError } from "../db/model/user/user.error";
 import { UserModel } from "../db/model/user/user.model";
+import { sendConfirmationEmail } from '../middleware/emailVerify';
 import { userService } from "../service/user.service";
 
 
@@ -14,7 +15,9 @@ export async function createUserController(req, res, next) {
     const user = await UserModel.findOne({ email: dto.email })
     if (user) throw UserError.AlreadyExists(user.email)
     dto.password = await bcrypt.hash(dto.password, 8)
+
     const data = await userService.save(dto);
+    sendConfirmationEmail(data)
     success(res, data)
   } catch (error) {
     next(error)

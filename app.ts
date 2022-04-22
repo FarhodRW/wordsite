@@ -1,20 +1,20 @@
+import cors from 'cors'
+import 'dotenv/config'
 import express from 'express'
+import session from 'express-session'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
-import 'dotenv/config'
-import cors from 'cors'
 import cron from 'node-cron'
-import userRouter from './src/router/user.router'
-import tagRouter from './src/router/tag.router'
-import wordRouter from './src/router/word.router'
-import quizRouter from './src/router/quiz/quiz.router'
-import categoryRouter from './src/router/category.router'
-import { quizHistoryService } from './src/service/quiz/quiz-history.service'
-import { ErrorCodes, UserDefinedError } from './src/db/common/common.error'
 import passport from 'passport'
-import session from 'express-session'
 import "./src/common/passport-setup"
+import { ErrorCodes, UserDefinedError } from './src/db/common/common.error'
 import authRoutes from './src/router/authRoutes'
+import categoryRouter from './src/router/category.router'
+import quizRouter from './src/router/quiz/quiz.router'
+import tagRouter from './src/router/tag.router'
+import userRouter from './src/router/user.router'
+import wordRouter from './src/router/word.router'
+import { quizHistoryService } from './src/service/quiz/quiz-history.service'
 
 const app = express();
 
@@ -36,6 +36,8 @@ cron.schedule('*/2 * * * * *', () => {
 //middleware
 app.use(express.json())
 app.use(morgan('tiny'))
+
+app.use(express.static('public'))
 
 //session
 app.use(session({
