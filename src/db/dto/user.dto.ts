@@ -1,4 +1,4 @@
-import { IsEmail, IsOptional, IsString, MinLength } from "class-validator";
+import { IsBoolean, IsEmail, IsOptional, IsString, MinLength } from "class-validator";
 import { BaseDto, BaseDtoGroup, BasePagingDto } from "./base.dto";
 
 export class UserDtoGroup extends BaseDtoGroup {
@@ -34,6 +34,11 @@ export class UserDto extends BaseDto {
   })
   password: string;
 
+  @IsOptional({
+    groups: [UserDtoGroup.UPDATE, UserDtoGroup.LOGIN]
+  })
+  @IsBoolean({ groups: [UserDtoGroup.UPDATE, UserDtoGroup.LOGIN] })
+  isVerified: boolean;
 
   @IsOptional({
     groups: [UserDtoGroup.CREATE, UserDtoGroup.UPDATE]

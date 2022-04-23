@@ -7,8 +7,10 @@ require('dotenv').config();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 export const sendConfirmationEmail = async (user) => {
-  const token = jwt.sign({ _id: user._id }, process.env.JWTVERIFYKEY)
-  const url = `http://localhost:3003/confirmation/${token}`
+  const token = jwt.sign({ _id: user._id }, process.env.JWTVERIFYKEY, {
+    expiresIn: "1h"
+  })
+  const url = `https://takrorla.uz/verify/${token}`
 
   sgMail.send({
     to: user.email,
@@ -181,8 +183,8 @@ We are excited to have you on-board and there's just one step to verify if it's 
           <tr>
             <td align="center" bgcolor="#333"
               style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #fff;">
-              <p style="margin: 0;"><a href="https://t.me/takrorla_uz"><img src="telegram.png"></a></p>
-              <p style="margin: 0;"><a href="https://www.instagram.com/takrorla_uz"><img src="./telegram.png"></a></p>
+              <span style="margin: 0;"><a href="https://t.me/takrorla_uz"><img style="width: 25px;" src="https://api.mamadaliyev.uz/images/telegram.png"></a></span>
+              <span style="margin: 0;"><a href="https://www.instagram.com/takrorla_uz"><img style="width: 25px" src="https://api.mamadaliyev.uz/images/instagram.png"></a></span>
               <p style="margin: 0;">Yunusabad, Tashkent, Uzbekistan</p>
             </td>
           </tr>

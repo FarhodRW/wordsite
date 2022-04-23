@@ -2,12 +2,12 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { success } from "../common/response";
 import { validateIt } from "../common/validation";
+import { UserDefinedError } from "../db/common/common.error";
 import { UserDto, UserDtoGroup } from "../db/dto/user.dto";
 import { UserError } from "../db/model/user/user.error";
 import { UserModel } from "../db/model/user/user.model";
 import { sendConfirmationEmail } from '../middleware/emailVerify';
 import { userService } from "../service/user.service";
-
 
 export async function createUserController(req, res, next) {
   try {
@@ -35,9 +35,34 @@ export async function loginUserController(req, res, next) {
     const compare = await bcrypt.compare(data.password, user.password)
     if (!compare) throw UserError.Incorrect()
     const token = jwt.sign({ _id: user._id }, process.env.JWTUSERKEY)
+    if (!user.isVerified) throw UserError.NotVerified(user.email)
     success(res, { user, token })
   } catch (error) {
     next(error)
+  }
+}
+
+
+export async function verifyUserController(req, res, next) {
+  try {
+    const token = req.body.token
+    if (!token)
+      throw UserDefinedError.InvalidToken()
+
+    const data = await jwt.verify(token, process.env.JWTVERIFYKEY)
+    const user = await UserModel.findById(data._id)
+    if (!user)
+      throw UserDefinedError.InvalidToken()
+    user.isVerified = true;
+    await user.save();
+
+    return success(res)
+
+  } catch (e) {
+    res.status(400).send(UserDefinedError.InvalidToken())
+    // next(e)
+    // console.log("ewweeeee", e);
+
   }
 }
 

@@ -36,6 +36,9 @@ export class User extends BaseModel {
   @prop({})
   public image?: string;
 
+  @prop({ default: false })
+  public isVerified: boolean;
+
   @prop({})
   public googleId: string;
 

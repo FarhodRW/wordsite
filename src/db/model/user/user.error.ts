@@ -13,6 +13,9 @@ export class UserError {
     return new UserDefinedError(ErrorCodes.USERS + 2, 'Username or password is incorrect', data);
   };
 
+  static NotVerified(data: any = null) {
+    return new UserDefinedError(ErrorCodes.USERS + 2, 'Email is not verified', data);
+  };
 
 
 }
