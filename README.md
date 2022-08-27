@@ -43,4 +43,8 @@ https://takrorla.uz
 ## Screenshots
 
 ![App Screenshot](/public/images/Screenshot%20from%202022-08-28%2001-53-56.png)
+![App Screenshot](/public/images/Screenshot%20from%202022-08-28%2001-54-10.png)
+![App Screenshot](/public/images/Screenshot%20from%202022-08-28%2001-54-49.png)
+![App Screenshot](/public/images/Screenshot%20from%202022-08-28%2001-55-16.png)
+![App Screenshot](/public/images/Screenshot%20from%202022-08-28%2001-55-24.png)
 
