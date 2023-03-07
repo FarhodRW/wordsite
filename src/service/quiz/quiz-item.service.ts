@@ -1,15 +1,14 @@
 import { QuizItemModel } from "../../db/model/quiz/quiz-item/quiz-item.model";
 import { CommonService } from "../base.service";
-import { Model, Types } from 'mongoose'
+import { Model, Types } from "mongoose";
 import { QuizItemError } from "../../db/model/quiz/quiz-item/quiz-item.error";
 
 class QuizItemService<T> extends CommonService<T> {
   constructor(model: Model<T>) {
-    super(model)
+    super(model);
   }
 
   public async save(dto) {
-
     try {
       const question = await this.create(dto);
       return question;
@@ -21,27 +20,26 @@ class QuizItemService<T> extends CommonService<T> {
     }
   }
 
-
   public async getQuizItemByQuizId(quizHistoryId: Types.ObjectId) {
     const $match = {
       $match: {
-        quizHistoryId
-      }
-    }
+        quizHistoryId,
+      },
+    };
 
     const $addFields = {
       $addFields: {
         wordId: {
           $cond: [
             {
-              $eq: ['$isAnswered', true]
+              $eq: ["$isAnswered", true],
             },
-            '$wordId',
-            '$type6'
-          ]
-        }
-      }
-    }
+            "$wordId",
+            "$type6",
+          ],
+        },
+      },
+    };
 
     const $project = {
       $project: {
@@ -49,11 +47,11 @@ class QuizItemService<T> extends CommonService<T> {
         tags: 0,
         variants: {
           isAnswer: 0,
-          isFound: 0
-        }
-      }
-    }
-    const pipeline = [$match, $addFields, $project]
+          isFound: 0,
+        },
+      },
+    };
+    const pipeline = [$match, $addFields, $project];
     const items = await this.model.aggregate(pipeline);
 
     return items;
@@ -62,10 +60,10 @@ class QuizItemService<T> extends CommonService<T> {
   public async getQuizItemHistoryByQuizId(quizHistoryId: Types.ObjectId) {
     const $match = {
       $match: {
-        quizHistoryId
-      }
-    }
-    const pipeline = [$match]
+        quizHistoryId,
+      },
+    };
+    const pipeline = [$match];
     const items = await this.model.aggregate(pipeline);
 
     return items;
@@ -73,7 +71,7 @@ class QuizItemService<T> extends CommonService<T> {
 
   public async getQuizItemByIdService(_id: Types.ObjectId) {
     const item = await this.findById(_id);
-    if (!item) throw QuizItemError.NotFound()
+    if (!item) throw QuizItemError.NotFound();
 
     return item;
   }
@@ -82,18 +80,18 @@ class QuizItemService<T> extends CommonService<T> {
     const $match = {
       $match: {
         quizHistoryId,
-        isCorrect: true
-      }
-    }
+        isCorrect: true,
+      },
+    };
 
     const $group = {
       $group: {
         _id: null,
         count: {
-          $sum: 1
-        }
-      }
-    }
+          $sum: 1,
+        },
+      },
+    };
 
     const pipeline = [$match, $group];
 
@@ -103,6 +101,5 @@ class QuizItemService<T> extends CommonService<T> {
     return 0;
   }
 }
-
 
 export const quizItemService = new QuizItemService(QuizItemModel);
