@@ -18,11 +18,9 @@ export async function createQuizController(req, res, next) {
       QuizCreateDto,
       QuizCreateDtoGroup.CREATE
     );
-    console.log("dtoooooo", dto);
     dto.createdBy = req.user._id;
 
     const questions = await createQuizService.createQuiz(dto);
-    console.log("ddddddddddddddddd", questions);
 
     if (!questions.length) throw QuizHistoryError.NotEnoughWord();
 

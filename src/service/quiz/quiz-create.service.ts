@@ -46,7 +46,6 @@ class CreateQuizService<T> extends CommonService<T> {
       { $project: { _id: 1, name: 1, defination: 1 } },
     ]);
 
-    console.log("#question", questions);
     return questions;
   }
 
