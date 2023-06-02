@@ -1,25 +1,24 @@
+import sgMail from "@sendgrid/mail";
+import jwt from "jsonwebtoken";
 
-import sgMail from '@sendgrid/mail';
-import jwt from 'jsonwebtoken';
-
-
-require('dotenv').config();
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+require("dotenv").config();
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export const sendConfirmationEmail = async (user) => {
   const token = jwt.sign({ _id: user._id }, process.env.JWTVERIFYKEY, {
-    expiresIn: "1h"
-  })
-  const url = `https://takrorla.uz/verify/${token}`
+    expiresIn: "1h",
+  });
+  const url = `https://takrorla.uz/verify/${token}`;
 
-  sgMail.send({
-    to: user.email,
-    from: {
-      email: 'info@takrorla.uz',
-      name: 'Takrorla Team'
-    },
-    subject: 'Please confirm your email',
-    html: ` 
+  sgMail
+    .send({
+      to: user.email,
+      from: {
+        email: "info@takrorla.uz",
+        name: "Takrorla Team",
+      },
+      subject: "Please confirm your email",
+      html: ` 
     
     <body style="background-color: #333;">
   <!-- start preheader -->
@@ -44,7 +43,7 @@ export const sendConfirmationEmail = async (user) => {
           <tr>
             <td align="center" valign="top" style="padding: 36px 24px;">
               <a href="https://sendgrid.com" target="_blank" style="display: inline-block;">
-                <img src="https://takrorla.uz/img/logo.c52c114b.png" alt="Logo" border="0"
+                <img src="https://api.takrorla.uz/images/takrorla-logo.png" alt="Logo" border="0"
                   style="display: block; width:200px; min-width: 48px;">
               </a>
             </td>
@@ -183,8 +182,8 @@ We are excited to have you on-board and there's just one step to verify if it's 
           <tr>
             <td align="center" bgcolor="#333"
               style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #fff;">
-              <span style="margin: 0;"><a href="https://t.me/takrorla_uz"><img style="width: 25px;" src="https://api.mamadaliyev.uz/images/telegram.png"></a></span>
-              <span style="margin: 0;"><a href="https://www.instagram.com/takrorla_uz"><img style="width: 25px" src="https://api.mamadaliyev.uz/images/instagram.png"></a></span>
+              <span style="margin: 0;"><a href="https://t.me/+rulq0jvUtIphMTNi"><img style="width: 25px;" src="https://api.takrorla.uz/images/telegram.png"></a></span>
+              <span style="margin: 0;"><a href="https://www.instagram.com/takrorla_uz"><img style="width: 25px" src="https://api.takrorla.uz/images/instagram.png"></a></span>
               <p style="margin: 0;">Yunusabad, Tashkent, Uzbekistan</p>
             </td>
           </tr>
@@ -205,10 +204,12 @@ We are excited to have you on-board and there's just one step to verify if it's 
 
 </body>
     
-    `
-  })
-    .then(() => { console.log('Email sent') })
-    .catch((e) => {
-      console.log('Error on sending email', e);
+    `,
     })
-}
+    .then(() => {
+      console.log("Email sent");
+    })
+    .catch((e) => {
+      console.log("Error on sending email", e);
+    });
+};

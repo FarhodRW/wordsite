@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "nodemon app.ts",
     "build": "node_modules/.bin/tsc",
-    "deploy": "scp -r dist package.json .env root@135.181.200.92:/root/wordsite"
+    "deploy": "scp -r dist public package.json .env root@65.109.235.255:/root/apps/takrorla-api"
   },
   "author": "",
   "license": "ISC",
